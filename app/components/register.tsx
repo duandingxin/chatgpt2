@@ -85,7 +85,7 @@ export function Register() {
             onChange={(e) => handleInputChange(e, "password")}
           />{" "}
           <br />
-          <input
+          {/* <input
             type="text"
             placeholder="请输入您的手机号"
             value={registerInfo.telephone}
@@ -98,7 +98,7 @@ export function Register() {
             value={registerInfo.email}
             onChange={(e) => handleInputChange(e, "email")}
           />{" "}
-          <br />
+          <br /> */}
           <input
             type="text"
             placeholder="推荐人（选填）"
@@ -106,7 +106,7 @@ export function Register() {
             onChange={(e) => handleInputChange(e, "recommender")}
           />{" "}
           <br />
-          <div
+          {/* <div
             className="codeBox"
             style={{ display: "flex", alignContent: "center" }}
           >
@@ -128,7 +128,7 @@ export function Register() {
               className="codeImg"
               onClick={getCode}
             />
-          </div>
+          </div> */}
           <div className="btn">
             <button style={{ width: "250px" }} onClick={register}>
               注册

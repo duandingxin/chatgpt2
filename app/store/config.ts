@@ -31,7 +31,7 @@ export const DEFAULT_CONFIG = {
   dontShowMaskSplashScreen: false, // dont show splash screen when create chat
 
   modelConfig: {
-    model: "gpt-4-0613" as ModelType,
+    model: "gpt-3.5-turbo" as ModelType,
     temperature: 0.5,
     max_tokens: 2000,
     presence_penalty: 0,
@@ -58,19 +58,11 @@ export const ALL_MODELS = [
     available: ENABLE_GPT4,
   },
   {
-    name: "gpt-4-0314",
-    available: ENABLE_GPT4,
-  },
-  {
     name: "gpt-4-0613",
     available: ENABLE_GPT4,
   },
   {
     name: "gpt-4-32k",
-    available: ENABLE_GPT4,
-  },
-  {
-    name: "gpt-4-32k-0314",
     available: ENABLE_GPT4,
   },
   {
@@ -96,18 +88,6 @@ export const ALL_MODELS = [
   {
     name: "gpt-3.5-turbo-16k-0613",
     available: true,
-  },
-  {
-    name:"HispreadText",
-    available: ENABLE_GPT4,
-  },
-  {
-    name:"HispreadText-Super",
-    available: ENABLE_GPT4,
-  },
-  {
-    name:"HispreadText-Internet",
-    available: ENABLE_GPT4,
   },
   {
     name: "qwen-v1", // 通义千问

@@ -512,10 +512,9 @@ export function Settings() {
           </ListItem>
           <ListItem title={Locale.Settings.RemainingDuration}>
             {/* <Link to={Path.Register}> */}
-            {/* <span onClick={handleClick} className={styles["charge"]}> */}
+            <span onClick={handleClick} className={styles["charge"]}>
             <span className={styles["charge"]}>
-              {/* {expire} <span style={{ fontSize: "12px" }}>(点击充值时长)</span> */}
-              9999小时
+              {expire} <span style={{ fontSize: "12px" }}>(点击充值时长)</span>
             </span>
             {/* </Link> */}
           </ListItem>

@@ -315,8 +315,6 @@ export function Settings() {
     navigate(Path.Commodity);
   };
 
- 
-
   const clientConfig = useMemo(() => getClientConfig(), []);
   const showAccessCode = enabledAccessControl && !clientConfig?.isApp;
 
@@ -357,7 +355,7 @@ export function Settings() {
     navigate(Path.Login);
   };
 
-  function handleKeyDown(event: { key: string; }) {
+  function handleKeyDown(event: { key: string }) {
     if (event.key === "Enter") {
       axios({
         method: "post",
@@ -388,7 +386,7 @@ export function Settings() {
         method: "post",
         url: "https://test.workergpt.cn/redemption/getRedem",
         data: {
-          code:event.target.value,
+          code: event.target.value,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,
         },
         withCredentials: true,
@@ -513,7 +511,6 @@ export function Settings() {
           <ListItem title={Locale.Settings.RemainingDuration}>
             {/* <Link to={Path.Register}> */}
             <span onClick={handleClick} className={styles["charge"]}>
-            <span className={styles["charge"]}>
               {expire} <span style={{ fontSize: "12px" }}>(点击充值时长)</span>
             </span>
             {/* </Link> */}

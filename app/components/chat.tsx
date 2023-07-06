@@ -543,18 +543,14 @@ export function Chat() {
 
   const doSubmit = (userInput: string) => {
     if (userInput.trim() === "") return;
-    if (
-      config.modelConfig.model.includes("gpt-3.5")
-    ) {
-          setIsLoading(true);
-          chatStore.onUserInput(userInput).then(() => setIsLoading(false));
-          localStorage.setItem(LAST_INPUT_KEY, userInput);
-          setUserInput("");
-          setPromptHints([]);
-          if (!isMobileScreen) inputRef.current?.focus();
-          setAutoScroll(true);
-        }
-        }
+    if (config.modelConfig.model.includes("gpt-3.5")) {
+      setIsLoading(true);
+      chatStore.onUserInput(userInput).then(() => setIsLoading(false));
+      localStorage.setItem(LAST_INPUT_KEY, userInput);
+      setUserInput("");
+      setPromptHints([]);
+      if (!isMobileScreen) inputRef.current?.focus();
+      setAutoScroll(true);
     } else {
       axios({
         method: "get",

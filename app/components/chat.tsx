@@ -566,7 +566,7 @@ export function Chat() {
           if (!isMobileScreen) inputRef.current?.focus();
           setAutoScroll(true);
         } else {
-          alert("防止滥用和爬虫请加qq群876649727或者链接http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=4tWX8-9DhRIdodlEvwtjZP8TaYBsJqBh&authKey=lBdUTgs0RbHfvJoTbJ3J8%2BLqEQFPrBGPozek8PHnFsbeCNlkZ%2FJYefngFlQGpoeY&noverify=0&group_code=876649727");
+          alert("因openai开启预付费模式.导致网站上升故开启收费模式.");
           navigate(Path.Commodity);
         }
       });

@@ -1,0 +1,72 @@
+.box{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    // background-color: #E7F8FF;
+}
+
+.login-box{
+    width: 500px;
+    height: 500px;
+    // background: #bfc;
+    border-radius: 10px;
+    // box-shadow: 10px 10px 10px 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info{
+    width: 500px;
+    text-align: center;
+    input{
+        outline: none;
+        margin-top: 20px;
+        width: 250px;
+        border: 1px solid grey;
+        transition: all .3s ease;
+        border-radius: 8px;
+        text-align: left;
+    }
+    .code{
+        width: 100px;
+        display: block;
+    }
+    input:focus{
+        border: 1px solid #1D93AB;
+    }
+}
+.btn{
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+    margin: auto;
+    margin-top: 20px;
+    button{
+        width: 100px;
+        height: 30px;
+        border-radius: 5px;
+        border: 1px solid #1D93AB;
+        background-color: var(--white);
+        cursor: pointer;
+    }
+}
+
+.imge{
+    width: 150px;
+    height: 30px;
+    display: block;
+}
+.codeBox{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.codeImg{
+    cursor: pointer;
+}

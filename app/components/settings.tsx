@@ -291,7 +291,7 @@ export function Settings() {
 
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/checklogin",
+      url: "https://test.workergpt.cn/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       console.log(res);

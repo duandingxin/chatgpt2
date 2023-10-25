@@ -406,9 +406,6 @@ export function ChatActions(props: {
           icon={<BottomIcon />}
         />
       )}
-
-
-
       {/* 对话设置 */}
       {props.hitBottom && (
         <ChatAction
@@ -417,7 +414,7 @@ export function ChatActions(props: {
           icon={<SettingsIcon />}
         />
       )}
-
+      {/* 调整主题 */}
       <ChatAction
         onClick={nextTheme}
         text={Locale.Chat.InputActions.Theme[theme]}
@@ -433,16 +430,12 @@ export function ChatActions(props: {
           </>
         }
       />
-
+      {/* 快捷指令 */}
       <ChatAction
         onClick={props.showPromptHints}
         text={Locale.Chat.InputActions.Prompt}
         icon={<PromptIcon />}
       />
-
-
-
-
       {/* 所有面具 */}
       <ChatAction
         onClick={() => {
@@ -451,7 +444,7 @@ export function ChatActions(props: {
         text={Locale.Chat.InputActions.Masks}
         icon={<MaskIcon />}
       />
-
+      {/* 清除聊天 */}
       <ChatAction
         text={Locale.Chat.InputActions.Clear}
         icon={<BreakIcon />}
@@ -593,7 +586,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/checklogin",
+      url: "https://test.workergpt.cn/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -826,7 +819,7 @@ export function Chat() {
             {Locale.Chat.SubTitle(session.messages.length)}
           </div>
         </div>
-{/* PcUI */}
+        {/* PcUI */}
         {showMaxIcon && <>
           <div className="window-actions">
             {/* pc端模型选择 */}
@@ -878,7 +871,7 @@ export function Chat() {
             )}
           </div>
         </>}
-{/* MoblieUI */}
+        {/* MoblieUI */}
         {!showMaxIcon && <>
           <div>
             {/* 导出聊天记录 */}
@@ -926,7 +919,14 @@ export function Chat() {
           </div>
         </>
         }
-        
+
+        {/* 导出聊天记录modal显示 */}
+        {showExport && (
+          <ExportMessageModal onClose={() => setShowExport(false)} />
+        )}
+
+
+        {/* ？ */}
         <PromptToast
           showToast={!hitBottom}
           showModal={showPromptModal}
@@ -1084,10 +1084,7 @@ export function Chat() {
         </div>
       </div>
 
-      {/* 导出聊天记录modal显示 */}
-      {showExport && (
-        <ExportMessageModal onClose={() => setShowExport(false)} />
-      )}
+
     </div>
   );
 }

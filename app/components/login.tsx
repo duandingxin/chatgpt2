@@ -26,7 +26,7 @@ export function Login() {
   }, []);
 
   function getCode() {
-    axios.get("https://reverse.abom.top/common/captcha").then((res) => {
+    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
       console.log(res.data.data);
       loginInfo.key = res.data.data.key;
       setImage(res.data.data.image);
@@ -37,7 +37,7 @@ export function Login() {
     console.log(loginInfo);
     await axios({
       method: "post",
-      url: "https://reverse.abom.top/common/login",
+      url: "https://test.workergpt.cn/common/login",
       data: loginInfo,
       withCredentials: true,
     }).then((res) => {

@@ -1,3 +1,5 @@
+//定义枚举  例如：Path..
+
 export const OWNER = "";
 export const REPO = "";
 export const REPO_URL = `http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=Gj_i54o0eIO8-ewC2fcIjQW-NYil9zba&authKey=AsifQqekDDfhyyGpfD3ceEZ8BMkCYKpecfCEmjNAe0lKz6pF%2FySCFob1w9fLT7cp&noverify=0&group_code=876649727`;

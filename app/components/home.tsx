@@ -3,29 +3,32 @@
 require("../polyfill");
 
 import { useState, useEffect } from "react";
-
-import styles from "./home.module.scss";
-
-import BotIcon from "../icons/bot.svg";
-import LoadingIcon from "../icons/three-dots.svg";
-
-import { getCSSVar, useMobileScreen } from "../utils";
-
-import dynamic from "next/dynamic";
-import { Path, SlotID } from "../constant";
-import { ErrorBoundary } from "./error";
-
 import {
   HashRouter as Router,
   Routes,
   Route,
   useLocation,
 } from "react-router-dom";
+
+import styles from "./home.module.scss";
+import BotIcon from "../icons/bot.svg";
+import LoadingIcon from "../icons/three-dots.svg";
+import { Path, SlotID } from "../constant";
+
+import { getCSSVar, useMobileScreen } from "../utils";
+
+import dynamic from "next/dynamic";
+
+import { ErrorBoundary } from "./error";
 import { SideBar } from "./sidebar";
-import { useAppConfig } from "../store/config";
 import { AuthPage } from "./auth";
+
 import { getClientConfig } from "../config/client";
 
+import { useAppConfig } from "../store/config";
+
+
+//Loading时
 export function Loading(props: { noLogo?: boolean }) {
   return (
     <div className={styles["loading-content"] + " no-dark"}>
@@ -35,38 +38,34 @@ export function Loading(props: { noLogo?: boolean }) {
   );
 }
 
+//设置按需加载各个组件页面       会在客户端渲染
 const Settings = dynamic(async () => (await import("./settings")).Settings, {
-  loading: () => <Loading noLogo />,
+  loading: () => <Loading noLogo />,     //在客户端首次渲染时的占位符 Loading页面
 });
-
 const Chat = dynamic(async () => (await import("./chat")).Chat, {
   loading: () => <Loading noLogo />,
 });
-
 const NewChat = dynamic(async () => (await import("./new-chat")).NewChat, {
   loading: () => <Loading noLogo />,
 });
-
 const MaskPage = dynamic(async () => (await import("./mask")).MaskPage, {
   loading: () => <Loading noLogo />,
 });
-
 const Login = dynamic(async () => (await import("./login")).Login, {
   loading: () => <Loading noLogo />,
 });
-
 const Register = dynamic(async () => (await import("./register")).Register, {
   loading: () => <Loading noLogo />,
 });
-
 const Commodity = dynamic(async () => (await import("./commodity")).Commodity, {
   loading: () => <Loading noLogo />,
 });
-
 const Paying = dynamic(async () => (await import("./paying")).Paying, {
   loading: () => <Loading noLogo />,
 });
 
+
+//切换主题
 export function useSwitchTheme() {
   const config = useAppConfig();
 
@@ -97,7 +96,7 @@ export function useSwitchTheme() {
     }
   }, [config.theme]);
 }
-
+//在进入主页时用于预先展示Loding
 const useHasHydrated = () => {
   const [hasHydrated, setHasHydrated] = useState<boolean>(false);
 
@@ -108,6 +107,7 @@ const useHasHydrated = () => {
   return hasHydrated;
 };
 
+//?   异步加载谷歌字体
 const loadAsyncGoogleFont = () => {
   const linkEl = document.createElement("link");
   const proxyFontUrl = "/google-fonts";
@@ -196,4 +196,4 @@ export function Home() {
 
 
 
-// app.js  入口文件 home
+// index.js  入口文件 home

@@ -1,3 +1,5 @@
+//Settings store
+
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { getClientConfig } from "../config/client";
@@ -28,7 +30,7 @@ export const DEFAULT_CONFIG = {
 
   disablePromptHint: false,
 
-  dontShowMaskSplashScreen: false, // dont show splash screen when create chat
+  dontShowMaskSplashScreen: false, // 创建聊天时不显示启动屏幕
 
   modelConfig: {
     model: "gpt-3.5-turbo-0301" as ModelType,

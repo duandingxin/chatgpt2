@@ -1,6 +1,10 @@
 import { useEffect, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { shouldProcessLinkClick } from "react-router-dom/dist/dom";
+import { useAppConfig, useChatStore } from "../store";
 
 import styles from "./home.module.scss";
+import { showToast } from "./ui-lib";
 
 import { IconButton } from "./button";
 import SettingsIcon from "../icons/settings.svg";
@@ -15,8 +19,6 @@ import ShopIcon from "../icons/shop.svg";
 
 import Locale from "../locales";
 
-import { useAppConfig, useChatStore } from "../store";
-
 import {
   MAX_SIDEBAR_WIDTH,
   MIN_SIDEBAR_WIDTH,
@@ -25,15 +27,14 @@ import {
   REPO_URL,
 } from "../constant";
 
-import { Link, useNavigate } from "react-router-dom";
 import { useMobileScreen } from "../utils";
+
 import dynamic from "next/dynamic";
-import { showToast } from "./ui-lib";
-import { shouldProcessLinkClick } from "react-router-dom/dist/dom";
 
 const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
   loading: () => null,
 });
+
 
 function useHotKey() {
   const chatStore = useChatStore();
@@ -108,7 +109,7 @@ function useDragSideBar() {
 export function SideBar(props: { className?: string }) {
   const chatStore = useChatStore();
 
-  // drag side bar
+  // 拖拽 Sidebar
   const { onDragMouseDown, shouldNarrow } = useDragSideBar();
   const navigate = useNavigate();
   const config = useAppConfig();

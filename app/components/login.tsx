@@ -1,32 +1,34 @@
+import { ChangeEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   HashRouter as Router,
   Routes,
   Route,
   useLocation,
 } from "react-router-dom";
+
 import "./login.scss";
-import { Link, useNavigate } from "react-router-dom";
 import { Path } from "../constant";
-import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+
 export function Login() {
   const [image, setImage] = useState("");
   const navigate = useNavigate();
-  const [loginInfo, setLoginInfo] = useState({
+
+  const [loginInfo, setLoginInfo] = useState({        //初始化登录信息
     username: "",
     password: "",
     code: "",
     key: "",
   });
-  const getCookies=document.cookie
+
+  const getCookies = document.cookie
   console.log(getCookies)
 
-  useEffect(() => {
-    getCode();
-  }, []);
 
+  //验证码
   function getCode() {
-    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
+    axios.get("https://reverse.abom.top/common/captcha").then((res) => {
       console.log(res.data.data);
       loginInfo.key = res.data.data.key;
       setImage(res.data.data.image);
@@ -37,7 +39,7 @@ export function Login() {
     console.log(loginInfo);
     await axios({
       method: "post",
-      url: "https://test.workergpt.cn/common/login",
+      url: "https://reverse.abom.top/common/login",
       data: loginInfo,
       withCredentials: true,
     }).then((res) => {
@@ -50,12 +52,17 @@ export function Login() {
     });
   }
 
+//受控组件Input 的change监听事件
   function handleInputChange(
     event: ChangeEvent<HTMLInputElement>,
     inputName: string,
   ) {
     setLoginInfo({ ...loginInfo, [inputName]: event.target.value });
   }
+
+  useEffect(() => {
+    getCode();
+  }, []);
 
   return (
     <div className="box">
@@ -75,6 +82,8 @@ export function Login() {
             onChange={(e) => handleInputChange(e, "password")}
           />{" "}
           <br />
+
+{/* 验证码功能 */}
           {/* <div
             className="codeBox"
             style={{ display: "flex", alignContent: "center" }}
@@ -98,6 +107,7 @@ export function Login() {
               className={"codeImg"}
             />
           </div> */}
+
           <div className="btn">
             <button onClick={login}>登录</button>
             <Link to={Path.Register}>

@@ -59,10 +59,10 @@ import { ChatControllerPool } from "../client/controller";
 import { Prompt, usePromptStore } from "../store/prompt";
 import Locale from "../locales";
 
-import { IconButton } from "./button";
 import styles from "./home.module.scss";
 import chatStyle from "./chat.module.scss";
 import { ListItem, Modal, Select } from "./ui-lib";
+import { IconButton } from "./button";
 
 import { LAST_INPUT_KEY, Path, REQUEST_TIMEOUT_MS } from "../constant";
 import { Avatar } from "./emoji";
@@ -559,7 +559,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/user/checkexpire",
+        url: "https://reverse.abom.top/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -586,7 +586,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.abom.top/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {

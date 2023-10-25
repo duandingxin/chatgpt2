@@ -1,11 +1,14 @@
+import { ChangeEvent, useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   HashRouter as Router,
   Routes,
   Route,
   useLocation,
 } from "react-router-dom";
+import axios from "axios";
+
 import "./login.scss";
-import { Link, useNavigate } from "react-router-dom";
 import {
   MAX_SIDEBAR_WIDTH,
   MIN_SIDEBAR_WIDTH,
@@ -13,13 +16,13 @@ import {
   Path,
   REPO_URL,
 } from "../constant";
-import { ChangeEvent, useEffect, useState } from "react";
-import axios from "axios";
+
 export function Register() {
   const navigate = useNavigate();
   const goLogin = () => {
     navigate("/login");
   };
+
   const [image, setImage] = useState("");
   const [registerInfo, setRegisterInfo] = useState({
     username: "",
@@ -35,11 +38,11 @@ export function Register() {
     console.log(registerInfo);
     axios({
       method: "post",
-      url: "https://test.workergpt.cn/common/register",
+      url: "https://reverse.abom.top/common/register",
       data: registerInfo,
       withCredentials: true,
     }).then((res) => {
-      console.log(res);
+      console.log(res);          
       if (res.data.code == 200) {
         alert("注册成功");
         goLogin();
@@ -49,12 +52,8 @@ export function Register() {
     });
   }
 
-  useEffect(() => {
-    getCode();
-  }, []);
-
   function getCode() {
-    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
+    axios.get("https://reverse.abom.top/common/captcha").then((res) => {
       registerInfo.key = res.data.data.key;
       setImage(res.data.data.image);
     });
@@ -66,6 +65,10 @@ export function Register() {
   ) {
     setRegisterInfo({ ...registerInfo, [inputName]: event.target.value });
   }
+
+  useEffect(() => {
+    getCode();
+  }, []);
 
   return (
     <div className="box">

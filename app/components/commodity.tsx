@@ -26,7 +26,7 @@ export function Commodity() {
   const getCommodity = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/commodity",
+      url: "https://test.workergpt.cn/commodity",
       withCredentials: true,
     }).then((res) => {
       setProducts(res.data.data);

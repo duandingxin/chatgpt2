@@ -30,7 +30,7 @@ export function Paying() {
   const paying = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/getCode",
+      url: "https://test.workergpt.cn/user/getCode",
       withCredentials: true,
       params: {
         commodityId,
@@ -52,7 +52,7 @@ export function Paying() {
         };
         axios({
           method: "post",
-          url: "https://reverse.abom.top/order/query",
+          url: "https://test.workergpt.cn/order/query",
           data,
           withCredentials: true,
         }).then(() => {

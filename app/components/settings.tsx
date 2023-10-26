@@ -504,7 +504,7 @@ export function Settings() {
             <span onClick={goLogin} className={styles["charge"]}>
               {localStorage.getItem("userInfo")
                 ? JSON.parse(localStorage.getItem("userInfo")!).username +
-                  "（点击可切换账户）"
+                "（点击可切换账户）"
                 : "未登录(点击登录)"}
             </span>
           </ListItem>
@@ -565,20 +565,23 @@ export function Settings() {
             </Select>
           </ListItem>
 
-          {/* <ListItem title={Locale.Settings.Lang.Name}>
-            <Select
-              value={getLang()}
-              onChange={(e) => {
-                changeLang(e.target.value as any);
-              }}
-            >
-              {AllLangs.map((lang) => (
-                <option value={lang} key={lang}>
-                  {ALL_LANG_OPTIONS[lang]}
-                </option>
-              ))}
-            </Select>
-          </ListItem> */}
+          {/* 切换语言功能 */}
+          {/* <>
+            <ListItem title={Locale.Settings.Lang.Name}>
+              <Select
+                value={getLang()}
+                onChange={(e) => {
+                  changeLang(e.target.value as any);
+                }}
+              >
+                {AllLangs.map((lang) => (
+                  <option value={lang} key={lang}>
+                    {ALL_LANG_OPTIONS[lang]}
+                  </option>
+                ))}
+              </Select>
+            </ListItem>
+          </> */}
 
           <ListItem
             title={Locale.Settings.FontSize.Title}
@@ -625,15 +628,17 @@ export function Settings() {
               onChange={(e) =>
                 updateConfig(
                   (config) =>
-                    (config.dontShowMaskSplashScreen =
-                      !e.currentTarget.checked),
+                  (config.dontShowMaskSplashScreen =
+                    !e.currentTarget.checked),
                 )
               }
             ></input>
           </ListItem>
         </List>
 
-        {/* <List>
+        {/* APIkey 余额查询 接口地址 功能 */}
+        {/* <>
+        <List>
           {showAccessCode ? (
             <ListItem
               title={Locale.Settings.AccessCode.Title}
@@ -706,7 +711,10 @@ export function Settings() {
               ></input>
             </ListItem>
           ) : null}
-        </List> */}
+        </List> 
+        </> */}
+
+
 
         <List>
           <ListItem
@@ -741,7 +749,7 @@ export function Settings() {
         </List>
 
         <List>
-{/* 使用ModelConfigList */}
+          {/* 使用ModelConfigList */}
           <ModelConfigList
             modelConfig={config.modelConfig}
             updateConfig={(updater) => {

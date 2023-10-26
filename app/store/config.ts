@@ -47,7 +47,7 @@ export type ChatConfig = typeof DEFAULT_CONFIG;
 
 export type ChatConfigStore = ChatConfig & {
   reset: () => void;
-  update: (updater: (config: ChatConfig) => void) => void;     //更新全屏放大或缩小
+  update: (updater: (config: ChatConfig) => void) => void;     //更新config
 };
 
 export type ModelConfig = ChatConfig["modelConfig"];

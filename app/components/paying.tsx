@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import "./paying.scss";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Path } from "../constant";
+
+import "./paying.scss";
 import { IconButton } from "./button";
 import CloseIcon from "../icons/close.svg";
+
+import { Path } from "../constant";
 import Locale, { AllLangs, changeLang, getLang } from "../locales";
+
 export function Paying() {
   const { commodityId } = useParams();
   const navigate = useNavigate();
+  
   useEffect(() => {
     paying();
   }, []);

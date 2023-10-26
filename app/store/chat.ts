@@ -120,6 +120,7 @@ export const useChatStore = create<ChatStore>()(
         }));
       },
 
+      //选择对话框
       selectSession(index: number) {
         set({
           currentSessionIndex: index,
@@ -168,6 +169,7 @@ export const useChatStore = create<ChatStore>()(
         }));
       },
 
+      //删除会话
       deleteSession(index) {
         const deletingLastSession = get().sessions.length === 1;
         const deletedSession = get().sessions.at(index);

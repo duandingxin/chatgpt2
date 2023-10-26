@@ -41,8 +41,10 @@ export enum StoreKey {
   Update = "chat-update",
 }
 
-export const MAX_SIDEBAR_WIDTH = 500;
+//侧边栏宽度
+export const MAX_SIDEBAR_WIDTH = 500;   
 export const MIN_SIDEBAR_WIDTH = 230;
+//小于230时会默认一种展示方式
 export const NARROW_SIDEBAR_WIDTH = 100;
 
 export const ACCESS_CODE_PREFIX = "ak-";

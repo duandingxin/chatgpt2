@@ -61,10 +61,10 @@ export function ListItem(props: {
 
 export function List(props: {
   children:
-    | Array<JSX.Element | null | undefined>
-    | JSX.Element
-    | null
-    | undefined;
+  | Array<JSX.Element | null | undefined>
+  | JSX.Element
+  | null
+  | undefined;
 }) {
   return <div className={styles.list}>{props.children}</div>;
 }
@@ -182,7 +182,7 @@ export function Toast(props: ToastProps) {
     </div>
   );
 }
-
+//底部信息提示
 export function showToast(
   content: string,
   action?: ToastProps["action"],
@@ -209,6 +209,7 @@ export function showToast(
   root.render(<Toast content={content} action={action} onClose={close} />);
 }
 
+// 使用ts泛型接口来定义Input的Props
 export type InputProps = React.HTMLProps<HTMLTextAreaElement> & {
   autoHeight?: boolean;
   rows?: number;
@@ -223,6 +224,7 @@ export function Input(props: InputProps) {
   );
 }
 
+//定义API输入UI
 export function PasswordInput(props: HTMLProps<HTMLInputElement>) {
   const [visible, setVisible] = useState(false);
 
@@ -246,6 +248,7 @@ export function PasswordInput(props: HTMLProps<HTMLInputElement>) {
   );
 }
 
+//定义selectUI
 export function Select(
   props: React.DetailedHTMLProps<
     React.SelectHTMLAttributes<HTMLSelectElement>,
@@ -257,6 +260,11 @@ export function Select(
     <div className={`${styles["select-with-icon"]} ${className}`}>
       <select className={styles["select-with-icon-select"]} {...otherProps}>
         {children}
+        {/* {React.Children.map(children, (child) =>
+    React.cloneElement(child as any, {
+      className: `${styles["rounded-border"]}`,
+    })
+  )} */}
       </select>
       <DownIcon className={styles["select-with-icon-icon"]} />
     </div>

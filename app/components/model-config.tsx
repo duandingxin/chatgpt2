@@ -32,8 +32,7 @@ export function ModelConfigList(props: {
       </ListItem>
 
 {/*  设置中的随机性 */}
-      <ListItem
-        title={Locale.Settings.Temperature.Title}
+      <ListItem title={Locale.Settings.Temperature.Title}
         subTitle={Locale.Settings.Temperature.SubTitle}
       >
         <InputRange
@@ -52,8 +51,7 @@ export function ModelConfigList(props: {
         ></InputRange>
       </ListItem>
 {/*  单次回复限制 */}
-      <ListItem
-        title={Locale.Settings.MaxTokens.Title}
+      <ListItem title={Locale.Settings.MaxTokens.Title}
         subTitle={Locale.Settings.MaxTokens.SubTitle}
       >
         <input
@@ -72,8 +70,7 @@ export function ModelConfigList(props: {
         ></input>
       </ListItem>
 {/*  话题新鲜度 */}
-      <ListItem
-        title={Locale.Settings.PresencePenalty.Title}
+      <ListItem title={Locale.Settings.PresencePenalty.Title}
         subTitle={Locale.Settings.PresencePenalty.SubTitle}
       >
         <InputRange
@@ -93,8 +90,7 @@ export function ModelConfigList(props: {
         ></InputRange>
       </ListItem>
 {/*  附带历史消息数 */}
-      <ListItem
-        title={Locale.Settings.HistoryCount.Title}
+      <ListItem title={Locale.Settings.HistoryCount.Title}
         subTitle={Locale.Settings.HistoryCount.SubTitle}
       >
         <InputRange
@@ -111,8 +107,7 @@ export function ModelConfigList(props: {
         ></InputRange>
       </ListItem>
 {/*  历史消息长度压缩阈值 */}
-      <ListItem
-        title={Locale.Settings.CompressThreshold.Title}
+      <ListItem title={Locale.Settings.CompressThreshold.Title}
         subTitle={Locale.Settings.CompressThreshold.SubTitle}
       >
         <input
@@ -130,7 +125,8 @@ export function ModelConfigList(props: {
         ></input>
       </ListItem>
 {/*  历史摘要 */}
-      <ListItem title={Locale.Memory.Title} subTitle={Locale.Memory.Send}>
+      <ListItem title={Locale.Memory.Title}
+       subTitle={Locale.Memory.Send}>
         <input
           type="checkbox"
           checked={props.modelConfig.sendMemory}

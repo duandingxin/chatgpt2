@@ -36,6 +36,7 @@ const ChatList = dynamic(async () => (await import("./chat-list")).ChatList, {
 });
 
 
+//设置监听键盘事件，实现切换对话框功能
 function useHotKey() {
   const chatStore = useChatStore();
 
@@ -44,9 +45,9 @@ function useHotKey() {
       if (e.metaKey || e.altKey || e.ctrlKey) {
         const n = chatStore.sessions.length;
         const limit = (x: number) => (x + n) % n;
-        const i = chatStore.currentSessionIndex;
+        const i = chatStore.currentSessionIndex;          //currentSessionIndex 指当前对话框
         if (e.key === "ArrowUp") {
-          chatStore.selectSession(limit(i - 1));
+          chatStore.selectSession(limit(i - 1));          //selectSession 是修改当前对话框的方法
         } else if (e.key === "ArrowDown") {
           chatStore.selectSession(limit(i + 1));
         }
@@ -64,31 +65,36 @@ function useDragSideBar() {
   const config = useAppConfig();
   const startX = useRef(0);
   const startDragWidth = useRef(config.sidebarWidth ?? 300);
-  const lastUpdateTime = useRef(Date.now());
+  const lastUpdateTime = useRef(Date.now());                     //获得最后更新时间
 
-  const handleMouseMove = useRef((e: MouseEvent) => {
-    if (Date.now() < lastUpdateTime.current + 50) {
-      return;
-    }
-    lastUpdateTime.current = Date.now();
-    const d = e.clientX - startX.current;
-    const nextWidth = limit(startDragWidth.current + d);
-    config.update((config) => (config.sidebarWidth = nextWidth));
-  });
-
-  const handleMouseUp = useRef(() => {
-    startDragWidth.current = config.sidebarWidth ?? 300;
-    window.removeEventListener("mousemove", handleMouseMove.current);
-    window.removeEventListener("mouseup", handleMouseUp.current);
-  });
-
+  //鼠标点击时，先获取鼠标的位置，然后添加后续方法
   const onDragMouseDown = (e: MouseEvent) => {
     startX.current = e.clientX;
 
     window.addEventListener("mousemove", handleMouseMove.current);
     window.addEventListener("mouseup", handleMouseUp.current);
   };
+  //鼠标点击移动时 更新config
+  const handleMouseMove = useRef((e: MouseEvent) => {
+    if (Date.now() < lastUpdateTime.current + 50) {        //判断更新时间间隔，避免频繁更新
+      return;
+    }
+    lastUpdateTime.current = Date.now();
+    const d = e.clientX - startX.current;                  //计算初始位置的偏移量
+    const nextWidth = limit(startDragWidth.current + d);   //比较当前宽度是否超过最大宽度
+    config.update((config) => (config.sidebarWidth = nextWidth));
+  });
+  //鼠标松开时 更新起始位置并移除点击和松开事件
+  const handleMouseUp = useRef(() => {
+    startDragWidth.current = config.sidebarWidth ?? 300;
+    window.removeEventListener("mousemove", handleMouseMove.current);
+    window.removeEventListener("mouseup", handleMouseUp.current);
+  });
+
+  //判断是否为手机显示
   const isMobileScreen = useMobileScreen();
+
+  //判断是否为最小宽度展示
   const shouldNarrow =
     !isMobileScreen && config.sidebarWidth < MIN_SIDEBAR_WIDTH;
 
@@ -97,8 +103,8 @@ function useDragSideBar() {
       ? NARROW_SIDEBAR_WIDTH
       : limit(config.sidebarWidth ?? 300);
     const sideBarWidth = isMobileScreen ? "100vw" : `${barWidth}px`;
-    document.documentElement.style.setProperty("--sidebar-width", sideBarWidth);
-  }, [config.sidebarWidth, isMobileScreen, shouldNarrow]);
+    document.documentElement.style.setProperty("--sidebar-width", sideBarWidth);  //设置宽度
+  }, [config.sidebarWidth, isMobileScreen, shouldNarrow]);         //只要这三个依赖项发生改变，就会更新宽度
 
   return {
     onDragMouseDown,
@@ -206,6 +212,7 @@ export function SideBar(props: { className?: string }) {
         </div>
       </div>
 
+      {/* 用于判定拉拽的区域 */}
       <div
         className={styles["sidebar-drag"]}
         onMouseDown={(e) => onDragMouseDown(e as any)}

@@ -17,6 +17,8 @@ export function Paying() {
     paying();
   }, []);
 
+
+  //定义产品接口
   interface Product {
     codeImg: string;
     productName: string;
@@ -48,7 +50,7 @@ export function Paying() {
         setOrderId(res.data.data.orderId);
         setCreateTime(res.data.data.createTime);
         setForPhone(res.data.data.url);
-        const userInfo = JSON.parse(localStorage.getItem("userInfo")!);
+        const userInfo = JSON.parse(localStorage.getItem("userInfo")!);       //!为非空断言操作
         let data = {
           commodityId,
           orderId: res.data.data.orderId,

@@ -119,6 +119,7 @@ export class ClientApi {
 
 export const api = new ClientApi();
 
+// 
 export function getHeaders() {
   const accessStore = useAccessStore.getState();
   let headers: Record<string, string> = {

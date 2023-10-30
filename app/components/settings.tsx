@@ -1,27 +1,5 @@
 import { useState, useEffect, useMemo, ChangeEvent } from "react";
-
-import styles from "./settings.module.scss";
-import axios from "axios";
-import ResetIcon from "../icons/reload.svg";
-import AddIcon from "../icons/add.svg";
-import CloseIcon from "../icons/close.svg";
-import CopyIcon from "../icons/copy.svg";
-import ClearIcon from "../icons/clear.svg";
-import LoadingIcon from "../icons/three-dots.svg";
-import EditIcon from "../icons/edit.svg";
-import EyeIcon from "../icons/eye.svg";
-import {
-  Input,
-  List,
-  ListItem,
-  Modal,
-  PasswordInput,
-  Popover,
-  Select,
-} from "./ui-lib";
-import { ModelConfigList } from "./model-config";
-
-import { IconButton } from "./button";
+import { useNavigate } from "react-router-dom";
 import {
   SubmitKey,
   useChatStore,
@@ -30,6 +8,20 @@ import {
   useAccessStore,
   useAppConfig,
 } from "../store";
+import axios from "axios";
+
+import styles from "./settings.module.scss";
+import ResetIcon from "../icons/reload.svg";
+import AddIcon from "../icons/add.svg";
+import CloseIcon from "../icons/close.svg";
+import CopyIcon from "../icons/copy.svg";
+import ClearIcon from "../icons/clear.svg";
+import LoadingIcon from "../icons/three-dots.svg";
+import EditIcon from "../icons/edit.svg";
+import EyeIcon from "../icons/eye.svg";
+import { ModelConfigList } from "./model-config";
+import { Input, List, ListItem, Modal, PasswordInput, Popover, Select, } from "./ui-lib";
+import { IconButton } from "./button";
 
 import Locale, {
   AllLangs,
@@ -37,14 +29,14 @@ import Locale, {
   changeLang,
   getLang,
 } from "../locales";
+
+import { Path, UPDATE_URL } from "../constant";
 import { copyToClipboard } from "../utils";
 import Link from "next/link";
-import { Path, UPDATE_URL } from "../constant";
 import { Prompt, SearchService, usePromptStore } from "../store/prompt";
-import { ErrorBoundary } from "./error";
 import { InputRange } from "./input-range";
-import { useNavigate } from "react-router-dom";
 import { Avatar, AvatarPicker } from "./emoji";
+import { ErrorBoundary } from "./error";
 import { getClientConfig } from "../config/client";
 
 function EditPromptModal(props: { id: number; onClose: () => void }) {

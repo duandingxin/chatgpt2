@@ -15,6 +15,7 @@ import CloseIcon from "../icons/close.svg";
 import MaskIcon from "../icons/mask.svg";
 import PluginIcon from "../icons/plugin.svg";
 import ShopIcon from "../icons/shop.svg";
+import PersonIcon from "../icons/person.svg"
 
 
 import Locale from "../locales";
@@ -184,11 +185,18 @@ export function SideBar(props: { className?: string }) {
               <IconButton icon={<SettingsIcon />} shadow />
             </Link>
           </div>
+          {/* 新增个人中心 */}
+          <div className={styles["sidebar-action"]}>
+            <Link to={Path.Settings}>
+              <IconButton icon={<PersonIcon />} shadow />
+            </Link>
+          </div>
           {<div className={styles["sidebar-action"]}>
             <a href={REPO_URL} target="_blank">
               <IconButton icon={<GithubIcon />} shadow />
             </a>
           </div>}
+          {/*  商城按钮 */}
           {<div className={styles["sidebar-action"]}>
             <Link to={Path.Commodity}>
               <IconButton icon={<ShopIcon />} shadow />

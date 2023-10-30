@@ -1,11 +1,14 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { DEFAULT_API_HOST, StoreKey } from "../constant";
-import { getHeaders } from "../client/api";
+
 import { BOT_HELLO } from "./chat";
 import { ALL_MODELS } from "./config";
+
+import { DEFAULT_API_HOST, StoreKey } from "../constant";
+import { getHeaders } from "../client/api";
 import { getClientConfig } from "../config/client";
 
+// 定义Store接口
 export interface AccessControlStore {
   accessCode: string;
   token: string;
@@ -25,7 +28,7 @@ export interface AccessControlStore {
 let fetchState = 0; // 0 not fetch, 1 fetching, 2 done
 
 const DEFAULT_OPENAI_URL =
-  getClientConfig()?.buildMode === "export" ? DEFAULT_API_HOST : "/api/openai/";
+  getClientConfig()?.buildMode === "export" ? DEFAULT_API_HOST : "/api/openai/";   // 第一个?是会在get..方法中去寻找buildMode属性
 console.log("[API] default openai url", DEFAULT_OPENAI_URL);
 
 export const useAccessStore = create<AccessControlStore>()(

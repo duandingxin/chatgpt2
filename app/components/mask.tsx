@@ -1,8 +1,14 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { IconButton } from "./button";
 import { ErrorBoundary } from "./error";
 
 import styles from "./mask.module.scss";
 
+import { ChatMessage, ModelConfig, useAppConfig, useChatStore } from "../store";
+import { DEFAULT_MASK_AVATAR, Mask, useMaskStore } from "../store/mask";
+import { downloadAs, readFromFile } from "../utils";
 import DownloadIcon from "../icons/download.svg";
 import UploadIcon from "../icons/upload.svg";
 import EditIcon from "../icons/edit.svg";
@@ -11,22 +17,15 @@ import CloseIcon from "../icons/close.svg";
 import DeleteIcon from "../icons/delete.svg";
 import EyeIcon from "../icons/eye.svg";
 import CopyIcon from "../icons/copy.svg";
-
-import { DEFAULT_MASK_AVATAR, Mask, useMaskStore } from "../store/mask";
-import { ChatMessage, ModelConfig, useAppConfig, useChatStore } from "../store";
-import { ROLES } from "../client/api";
 import { Input, List, ListItem, Modal, Popover, Select } from "./ui-lib";
 import { Avatar, AvatarPicker } from "./emoji";
-import Locale, { AllLangs, ALL_LANG_OPTIONS, Lang } from "../locales";
-import { useNavigate } from "react-router-dom";
-
 import chatStyle from "./chat.module.scss";
-import { useEffect, useState } from "react";
-import { downloadAs, readFromFile } from "../utils";
 import { Updater } from "../typing";
 import { ModelConfigList } from "./model-config";
 import { FileName, Path } from "../constant";
 import { BUILTIN_MASK_STORE } from "../masks";
+import { ROLES } from "../client/api";
+import Locale, { AllLangs, ALL_LANG_OPTIONS, Lang } from "../locales";
 
 export function MaskAvatar(props: { mask: Mask }) {
   return props.mask.avatar !== DEFAULT_MASK_AVATAR ? (
@@ -52,7 +51,7 @@ export function MaskConfig(props: {
     updater(config);
     props.updateMask((mask) => {
       mask.modelConfig = config;
-      // if user changed current session mask, it will disable auto sync
+      // 如果用户更改当前会话掩码，它将禁用自动同步
       mask.syncGlobalConfig = false;
     });
   };

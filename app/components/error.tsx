@@ -1,10 +1,11 @@
 import React from "react";
+
+import { downloadAs } from "../utils";
+import { ISSUE_URL } from "../constant";
+import Locale from "../locales";
 import { IconButton } from "./button";
 import GithubIcon from "../icons/github.svg";
 import ResetIcon from "../icons/reload.svg";
-import { ISSUE_URL } from "../constant";
-import Locale from "../locales";
-import { downloadAs } from "../utils";
 
 interface IErrorBoundaryState {
   hasError: boolean;

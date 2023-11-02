@@ -1,12 +1,14 @@
-import "./commodity.scss";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Path } from "../constant";
-import { ErrorBoundary } from "./error";
-import { useState, useEffect } from "react";
-import { IconButton } from "./button";
+
+import "./commodity.scss";
 import CloseIcon from "../icons/close.svg";
+import { IconButton } from "./button";
+import { Path } from "../constant";
 import Locale, { AllLangs, changeLang, getLang } from "../locales";
+import { ErrorBoundary } from "./error";
+
 export function Commodity() {
   interface Product {
     id: number;
@@ -33,9 +35,11 @@ export function Commodity() {
       console.log(products);
     });
   };
+
   useEffect(() => {
     getCommodity();
   }, []);
+  
   return (
     <ErrorBoundary>
       <div className="window-header">

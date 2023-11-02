@@ -1,4 +1,6 @@
+// 数字范围选择框
 import * as React from "react";
+
 import styles from "./input-range.module.scss";
 
 interface InputRangeProps {

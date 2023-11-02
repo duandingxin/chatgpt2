@@ -1,3 +1,4 @@
+// emoji头像选择
 import EmojiPicker, {
   Emoji,
   EmojiStyle,

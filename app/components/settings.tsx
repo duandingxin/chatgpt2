@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import {
   SubmitKey,
   useChatStore,
@@ -8,7 +9,7 @@ import {
   useAccessStore,
   useAppConfig,
 } from "../store";
-import axios from "axios";
+import { Prompt, SearchService, usePromptStore } from "../store/prompt";
 
 import styles from "./settings.module.scss";
 import ResetIcon from "../icons/reload.svg";
@@ -33,7 +34,6 @@ import Locale, {
 import { Path, UPDATE_URL } from "../constant";
 import { copyToClipboard } from "../utils";
 import Link from "next/link";
-import { Prompt, SearchService, usePromptStore } from "../store/prompt";
 import { InputRange } from "./input-range";
 import { Avatar, AvatarPicker } from "./emoji";
 import { ErrorBoundary } from "./error";
@@ -88,6 +88,7 @@ function EditPromptModal(props: { id: number; onClose: () => void }) {
   ) : null;
 }
 
+// 提示modal
 function UserPromptModal(props: { onClose?: () => void }) {
   const promptStore = usePromptStore();
   const userPrompts = promptStore.getUserPrompts();
@@ -190,6 +191,7 @@ function UserPromptModal(props: { onClose?: () => void }) {
   );
 }
 
+// 处理事件戳
 function formatVersionDate(t: string) {
   const d = new Date(+t);
   const year = d.getUTCFullYear();

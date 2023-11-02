@@ -26,6 +26,7 @@ import { AuthPage } from "./auth";
 import { getClientConfig } from "../config/client";
 
 import { useAppConfig } from "../store/config";
+import { PersonPage } from "./person";
 
 
 //Loading时
@@ -165,6 +166,7 @@ function Screen() {
               <Route path={Path.Masks} element={<MaskPage />} />
               <Route path={Path.Chat} element={<Chat />} />
               <Route path={Path.Settings} element={<Settings />} />
+              <Route path={Path.Person} element={<PersonPage />} />
             </Routes>
           </div>
         </>

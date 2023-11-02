@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="text" onclick="handleclick()">
+    </div>
+</body>
+
+<style>
+    .text {
+        height: 200px;
+        width: 200px;
+        background-color: red;
+    }
+</style>
+
+<Script>
+    function handleclick(){
+        alert(getArr())
+    }
+    function getArr(){
+        const arr=[1,[4,[5,[6,[7]]]],8]
+        let Narr = arr.toString().split(',')
+        // arr = [arr[0],...arr]
+        console.log(Narr)
+    }
+    function getTime(){
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth()+1;
+        var day = date.getDay();
+        var hour = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        const weekArr = ['星期一','星期二','星期三','星期四','星期五','星期六','星期天'];
+        var week = weekArr[date.getDay()];
+        return `${year}-${month}-${day} ${hour}:${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')},今天是${week}`
+    }
+</Script>
+
+</html>

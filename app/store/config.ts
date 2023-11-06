@@ -47,7 +47,7 @@ export type ChatConfig = typeof DEFAULT_CONFIG;
 
 export type ChatConfigStore = ChatConfig & {
   reset: () => void;
-  update: (updater: (config: ChatConfig) => void) => void;     //更新config
+  update: (updater: (config: ChatConfig) => void) => void; //更新config
 };
 
 export type ModelConfig = ChatConfig["modelConfig"];
@@ -57,6 +57,10 @@ const ENABLE_GPT4 = true;
 export const ALL_MODELS = [
   {
     name: "gpt-4",
+    available: ENABLE_GPT4,
+  },
+  {
+    name: "gpt-4-all",
     available: ENABLE_GPT4,
   },
   {

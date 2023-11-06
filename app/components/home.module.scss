@@ -548,6 +548,24 @@
   right: 30px;
   bottom: 32px;
 }
+.chat-input-file {
+  background-color: var(--primary);
+  color: white;
+  border-radius: 5px;
+
+  position: absolute;
+  right: 100px;
+  bottom: 38px;
+}
+.chat-input-fileInput {
+  background-color: var(--primary);
+  color: white;
+
+  position: absolute;
+  right: 100px;
+  bottom: 32px;
+  opacity: 0;
+}
 
 @media only screen and (max-width: 600px) {
   .chat-input {

@@ -191,7 +191,7 @@ function UserPromptModal(props: { onClose?: () => void }) {
   );
 }
 
-// 处理事件戳
+// 处理时间戳
 function formatVersionDate(t: string) {
   const d = new Date(+t);
   const year = d.getUTCFullYear();

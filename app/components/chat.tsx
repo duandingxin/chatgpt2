@@ -7,7 +7,10 @@ import React, {
   useMemo,
 } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
+
+import FileIcon from "../icons/File.svg";
 import SendWhiteIcon from "../icons/send-white.svg";
 import BrainIcon from "../icons/brain.svg";
 import RenameIcon from "../icons/rename.svg";
@@ -28,7 +31,6 @@ import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
 
-import axios from "axios";
 
 import {
   ChatMessage,
@@ -1074,6 +1076,18 @@ export function Chat() {
             rows={inputRows}
             autoFocus={autoFocus}
           />
+
+          {/* 选择图片功能 */}
+          {/* <input type="file"/> */}
+          {/* <IconButton
+            icon={<FileIcon />}
+            text={Locale.Chat.File}
+            className={styles["chat-input-file"]}
+            type="primary"
+            onClick={() => doSubmit(userInput)}
+          /> */}
+          {/* <input type="file" name="file" id="file" className={styles["chat-input-fileInput"]} />
+          <label htmlFor="file" className={styles["chat-input-file"]}><img src="../icons/pic.png" /></label> */}
           <IconButton
             icon={<SendWhiteIcon />}
             text={Locale.Chat.Send}

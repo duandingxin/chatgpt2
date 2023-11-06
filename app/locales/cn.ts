@@ -49,6 +49,7 @@ const cn = {
       }
       return inputHints + "，/ 触发补全";
     },
+    File: "选择文件",
     Send: "发送",
     Config: {
       Reset: "清除记忆",

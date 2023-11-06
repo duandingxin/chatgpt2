@@ -559,7 +559,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/user/checkexpire",
+        url: "https://reverse.abom.top/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -586,7 +586,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.abom.top/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {

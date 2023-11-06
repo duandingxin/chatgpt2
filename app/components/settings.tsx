@@ -285,7 +285,7 @@ export function Settings() {
 
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.abom.top/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       console.log(res);
@@ -315,7 +315,7 @@ export function Settings() {
   const getExpire = () => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/getexpire",
+      url: "https://reverse.abom.top/user/getexpire",
       withCredentials: true,
     }).then((res) => {
       setExpire(res.data.data);
@@ -325,7 +325,7 @@ export function Settings() {
   const getCurrentNumber = () => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/getCurrentNumber",
+      url: "https://reverse.abom.top/user/getCurrentNumber",
       withCredentials: true,
     }).then((res) => {
       setCurrentTime(res.data.data);
@@ -336,7 +336,7 @@ export function Settings() {
     if (localStorage.getItem("userInfo")) {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/common/logout",
+        url: "https://reverse.abom.top/common/logout",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code === 200) {
@@ -353,7 +353,7 @@ export function Settings() {
     if (event.key === "Enter") {
       axios({
         method: "post",
-        url: "https://test.workergpt.cn/redemption/getRedem",
+        url: "https://reverse.abom.top/redemption/getRedem",
         data: {
           code,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,
@@ -378,7 +378,7 @@ export function Settings() {
     if (event.target.value.length == 16) {
       axios({
         method: "post",
-        url: "https://test.workergpt.cn/redemption/getRedem",
+        url: "https://reverse.abom.top/redemption/getRedem",
         data: {
           code: event.target.value,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,

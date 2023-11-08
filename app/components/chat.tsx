@@ -42,7 +42,7 @@ import {
   DEFAULT_TOPIC,
   ModelConfig,
   ModalConfigValidator,
-  ALL_MODELS
+  ALL_MODELS,
 } from "../store";
 
 import {
@@ -385,7 +385,6 @@ export function ChatActions(props: {
     config.update((config) => (config.theme = nextTheme));
   }
 
-
   // stop all responses
   const couldStop = ChatControllerPool.hasPending();
   const stopAll = () => ChatControllerPool.stopAll();
@@ -474,7 +473,7 @@ export function Chat() {
   const config = useAppConfig();
   const fontSize = config.fontSize;
 
-  const [showExport, setShowExport] = useState(false);      //管理导出聊天记录是否显示
+  const [showExport, setShowExport] = useState(false); //管理导出聊天记录是否显示
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const [userInput, setUserInput] = useState("");
@@ -559,7 +558,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://reverse.abom.top/user/checkexpire",
+        url: "https://test.workergpt.cn/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -586,7 +585,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/checklogin",
+      url: "https://test.workergpt.cn/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -718,32 +717,31 @@ export function Chat() {
     .concat(
       isLoading
         ? [
-          {
-            ...createMessage({
-              role: "assistant",
-              content: "……",
-            }),
-            preview: true,
-          },
-        ]
+            {
+              ...createMessage({
+                role: "assistant",
+                content: "……",
+              }),
+              preview: true,
+            },
+          ]
         : [],
     )
     .concat(
       userInput.length > 0 && config.sendPreviewBubble
         ? [
-          {
-            ...createMessage({
-              role: "user",
-              content: userInput,
-            }),
-            preview: true,
-          },
-        ]
+            {
+              ...createMessage({
+                role: "user",
+                content: userInput,
+              }),
+              preview: true,
+            },
+          ]
         : [],
     );
 
   const [showPromptModal, setShowPromptModal] = useState(false);
-
 
   //重新命名对话
   const renameSession = () => {
@@ -759,7 +757,7 @@ export function Chat() {
   const isChat = location.pathname === Path.Chat;
 
   const autoFocus = !isMobileScreen || isChat; // only focus in chat page
-  const showMaxIcon = !isMobileScreen && !clientConfig?.isApp;  //判断手机和pc，用于显示不同ui
+  const showMaxIcon = !isMobileScreen && !clientConfig?.isApp; //判断手机和pc，用于显示不同ui
 
   useCommand({
     fill: setUserInput,
@@ -777,16 +775,15 @@ export function Chat() {
       <>
         {/* gpt模型选择 */}
 
-
         {/* <ListItem title="当前对话模型："> */}
         <Select
           value={props.modelConfig.model}
           onChange={(e) => {
             props.updateConfig(
               (config) =>
-              (config.model = ModalConfigValidator.model(
-                e.currentTarget.value,
-              )),
+                (config.model = ModalConfigValidator.model(
+                  e.currentTarget.value,
+                )),
             );
           }}
         >
@@ -798,12 +795,11 @@ export function Chat() {
         </Select>
         {/* </ListItem> */}
       </>
-    )
+    );
   }
 
   return (
     <div className={styles.chat} key={session.id}>
-
       {/* 聊天页面顶部菜单 */}
       <div className="window-header" data-tauri-drag-region>
         <div className="window-header-title">
@@ -820,111 +816,116 @@ export function Chat() {
           </div>
         </div>
         {/* PcUI */}
-        {showMaxIcon && <>
-          <div className="window-actions">
-            {/* pc端模型选择 */}
-            {showMaxIcon && (
-              <div className={chatStyle["chat-select-model"]}>
-                <ModelConfigList
-                  modelConfig={config.modelConfig}
-                  updateConfig={(updater) => {
-                    const modelConfig = { ...config.modelConfig };
-                    updater(modelConfig);
-                    config.update((config) => (config.modelConfig = modelConfig));
-                  }}
-                />
-              </div>
-
-            )}
-            {/* 修改对话名 */}
-            <div className="window-action-button">
-              <IconButton
-                icon={<RenameIcon />}
-                bordered
-                onClick={renameSession}
-              />
-            </div>
-            {/* 导出聊天记录 */}
-            <div className="window-action-button">
-              <IconButton
-                icon={<ExportIcon />}
-                bordered
-                title={Locale.Chat.Actions.Export}
-                onClick={() => {
-                  setShowExport(true);
-                }}
-              />
-            </div>
-            {/* 全屏放大缩小功能 */}
-            {showMaxIcon && (
+        {showMaxIcon && (
+          <>
+            <div className="window-actions">
+              {/* pc端模型选择 */}
+              {showMaxIcon && (
+                <div className={chatStyle["chat-select-model"]}>
+                  <ModelConfigList
+                    modelConfig={config.modelConfig}
+                    updateConfig={(updater) => {
+                      const modelConfig = { ...config.modelConfig };
+                      updater(modelConfig);
+                      config.update(
+                        (config) => (config.modelConfig = modelConfig),
+                      );
+                    }}
+                  />
+                </div>
+              )}
+              {/* 修改对话名 */}
               <div className="window-action-button">
                 <IconButton
-                  icon={config.tightBorder ? <MinIcon /> : <MaxIcon />}
+                  icon={<RenameIcon />}
                   bordered
+                  onClick={renameSession}
+                />
+              </div>
+              {/* 导出聊天记录 */}
+              <div className="window-action-button">
+                <IconButton
+                  icon={<ExportIcon />}
+                  bordered
+                  title={Locale.Chat.Actions.Export}
                   onClick={() => {
-                    config.update(
-                      (config) => (config.tightBorder = !config.tightBorder),
-                    );
+                    setShowExport(true);
                   }}
                 />
               </div>
-            )}
-          </div>
-        </>}
+              {/* 全屏放大缩小功能 */}
+              {showMaxIcon && (
+                <div className="window-action-button">
+                  <IconButton
+                    icon={config.tightBorder ? <MinIcon /> : <MaxIcon />}
+                    bordered
+                    onClick={() => {
+                      config.update(
+                        (config) => (config.tightBorder = !config.tightBorder),
+                      );
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </>
+        )}
         {/* MoblieUI */}
-        {!showMaxIcon && <>
-          <div>
-            {/* 导出聊天记录 */}
-            <div className={chatStyle["action-mobile"]}>
-              <IconButton
-                icon={<ExportIcon />}
-                bordered
-                title={Locale.Chat.Actions.Export}
-                onClick={() => {
-                  setShowExport(true);
-                }}
-              />
-            </div>
-
-            {/* 修改对话名 */}
-            <div className={chatStyle["action-mobile"]}>
-              <IconButton
-                icon={<RenameIcon />}
-                bordered
-                onClick={renameSession}
-              />
-            </div>
-            {/* 手机端返回功能 */}
-            <div className={chatStyle["action-mobile"]}>
-              <IconButton
-                icon={<ReturnIcon />}
-                bordered
-                title={Locale.Chat.Actions.ChatList}
-                onClick={() => navigate(Path.Home)}
-              />
-            </div>
-            {/* 手机端模型选择 */}
-            {!showMaxIcon &&
-              <div className={chatStyle["chat-select-model-mobile"]}>
-                <ModelConfigList
-                  modelConfig={config.modelConfig}
-                  updateConfig={(updater) => {
-                    const modelConfig = { ...config.modelConfig };
-                    updater(modelConfig);
-                    config.update((config) => (config.modelConfig = modelConfig));
+        {!showMaxIcon && (
+          <>
+            <div>
+              {/* 导出聊天记录 */}
+              <div className={chatStyle["action-mobile"]}>
+                <IconButton
+                  icon={<ExportIcon />}
+                  bordered
+                  title={Locale.Chat.Actions.Export}
+                  onClick={() => {
+                    setShowExport(true);
                   }}
                 />
               </div>
-            }
-          </div>
-        </>
-        }
+
+              {/* 修改对话名 */}
+              <div className={chatStyle["action-mobile"]}>
+                <IconButton
+                  icon={<RenameIcon />}
+                  bordered
+                  onClick={renameSession}
+                />
+              </div>
+              {/* 手机端返回功能 */}
+              <div className={chatStyle["action-mobile"]}>
+                <IconButton
+                  icon={<ReturnIcon />}
+                  bordered
+                  title={Locale.Chat.Actions.ChatList}
+                  onClick={() => navigate(Path.Home)}
+                />
+              </div>
+              {/* 手机端模型选择 */}
+              {!showMaxIcon && (
+                <div className={chatStyle["chat-select-model-mobile"]}>
+                  <ModelConfigList
+                    modelConfig={config.modelConfig}
+                    updateConfig={(updater) => {
+                      const modelConfig = { ...config.modelConfig };
+                      updater(modelConfig);
+                      config.update(
+                        (config) => (config.modelConfig = modelConfig),
+                      );
+                    }}
+                  />
+                </div>
+              )}
+            </div>
+          </>
+        )}
 
         {/* 导出聊天记录modal显示 */}
         {showExport && (
           <ExportMessageModal onClose={() => setShowExport(false)} />
         )}
-
 
         {/* ？ */}
         <PromptToast
@@ -1083,8 +1084,6 @@ export function Chat() {
           />
         </div>
       </div>
-
-
     </div>
   );
 }

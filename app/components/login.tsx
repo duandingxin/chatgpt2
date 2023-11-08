@@ -15,20 +15,20 @@ export function Login() {
   const [image, setImage] = useState("");
   const navigate = useNavigate();
 
-  const [loginInfo, setLoginInfo] = useState({        //初始化登录信息
+  const [loginInfo, setLoginInfo] = useState({
+    //初始化登录信息
     username: "",
     password: "",
     code: "",
     key: "",
   });
 
-  const getCookies = document.cookie
-  console.log(getCookies)
-
+  const getCookies = document.cookie;
+  console.log(getCookies);
 
   //验证码
   function getCode() {
-    axios.get("https://reverse.abom.top/common/captcha").then((res) => {
+    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
       console.log(res.data.data);
       loginInfo.key = res.data.data.key;
       setImage(res.data.data.image);
@@ -39,7 +39,7 @@ export function Login() {
     console.log(loginInfo);
     await axios({
       method: "post",
-      url: "https://reverse.abom.top/common/login",
+      url: "https://test.workergpt.cn/common/login",
       data: loginInfo,
       withCredentials: true,
     }).then((res) => {
@@ -52,7 +52,7 @@ export function Login() {
     });
   }
 
-//受控组件Input 的change监听事件
+  //受控组件Input 的change监听事件
   function handleInputChange(
     event: ChangeEvent<HTMLInputElement>,
     inputName: string,
@@ -82,8 +82,7 @@ export function Login() {
             onChange={(e) => handleInputChange(e, "password")}
           />{" "}
           <br />
-
-{/* 验证码功能 */}
+          {/* 验证码功能 */}
           {/* <div
             className="codeBox"
             style={{ display: "flex", alignContent: "center" }}
@@ -107,7 +106,6 @@ export function Login() {
               className={"codeImg"}
             />
           </div> */}
-
           <div className="btn">
             <button onClick={login}>登录</button>
             <Link to={Path.Register}>
@@ -125,7 +123,5 @@ export function Login() {
     </div>
   );
 }
-
-
 
 //登录界面√

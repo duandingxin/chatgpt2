@@ -12,11 +12,10 @@ import Locale, { AllLangs, changeLang, getLang } from "../locales";
 export function Paying() {
   const { commodityId } = useParams();
   const navigate = useNavigate();
-  
+
   useEffect(() => {
     paying();
   }, []);
-
 
   //定义产品接口
   interface Product {
@@ -36,7 +35,7 @@ export function Paying() {
   const paying = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/getCode",
+      url: "https://test.workergpt.cn/user/getCode",
       withCredentials: true,
       params: {
         commodityId,
@@ -50,7 +49,7 @@ export function Paying() {
         setOrderId(res.data.data.orderId);
         setCreateTime(res.data.data.createTime);
         setForPhone(res.data.data.url);
-        const userInfo = JSON.parse(localStorage.getItem("userInfo")!);       //!为非空断言操作
+        const userInfo = JSON.parse(localStorage.getItem("userInfo")!); //!为非空断言操作
         let data = {
           commodityId,
           orderId: res.data.data.orderId,
@@ -58,7 +57,7 @@ export function Paying() {
         };
         axios({
           method: "post",
-          url: "https://reverse.abom.top/order/query",
+          url: "https://test.workergpt.cn/order/query",
           data,
           withCredentials: true,
         }).then(() => {

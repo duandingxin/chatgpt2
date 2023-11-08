@@ -38,11 +38,11 @@ export function Register() {
     console.log(registerInfo);
     axios({
       method: "post",
-      url: "https://reverse.abom.top/common/register",
+      url: "https://test.workergpt.cn/common/register",
       data: registerInfo,
       withCredentials: true,
     }).then((res) => {
-      console.log(res);          
+      console.log(res);
       if (res.data.code == 200) {
         alert("注册成功");
         goLogin();
@@ -53,7 +53,7 @@ export function Register() {
   }
 
   function getCode() {
-    axios.get("https://reverse.abom.top/common/captcha").then((res) => {
+    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
       registerInfo.key = res.data.data.key;
       setImage(res.data.data.image);
     });
@@ -150,7 +150,5 @@ export function Register() {
     </div>
   );
 }
-
-
 
 //注册界面√

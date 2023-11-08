@@ -21,7 +21,15 @@ import LoadingIcon from "../icons/three-dots.svg";
 import EditIcon from "../icons/edit.svg";
 import EyeIcon from "../icons/eye.svg";
 import { ModelConfigList } from "./model-config";
-import { Input, List, ListItem, Modal, PasswordInput, Popover, Select, } from "./ui-lib";
+import {
+  Input,
+  List,
+  ListItem,
+  Modal,
+  PasswordInput,
+  Popover,
+  Select,
+} from "./ui-lib";
 import { IconButton } from "./button";
 
 import Locale, {
@@ -285,7 +293,7 @@ export function Settings() {
 
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/checklogin",
+      url: "https://test.workergpt.cn/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       console.log(res);
@@ -315,7 +323,7 @@ export function Settings() {
   const getExpire = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/getexpire",
+      url: "https://test.workergpt.cn/user/getexpire",
       withCredentials: true,
     }).then((res) => {
       setExpire(res.data.data);
@@ -325,7 +333,7 @@ export function Settings() {
   const getCurrentNumber = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/getCurrentNumber",
+      url: "https://test.workergpt.cn/user/getCurrentNumber",
       withCredentials: true,
     }).then((res) => {
       setCurrentTime(res.data.data);
@@ -336,7 +344,7 @@ export function Settings() {
     if (localStorage.getItem("userInfo")) {
       axios({
         method: "get",
-        url: "https://reverse.abom.top/common/logout",
+        url: "https://test.workergpt.cn/common/logout",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code === 200) {
@@ -353,7 +361,7 @@ export function Settings() {
     if (event.key === "Enter") {
       axios({
         method: "post",
-        url: "https://reverse.abom.top/redemption/getRedem",
+        url: "https://test.workergpt.cn/redemption/getRedem",
         data: {
           code,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,
@@ -378,7 +386,7 @@ export function Settings() {
     if (event.target.value.length == 16) {
       axios({
         method: "post",
-        url: "https://reverse.abom.top/redemption/getRedem",
+        url: "https://test.workergpt.cn/redemption/getRedem",
         data: {
           code: event.target.value,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,
@@ -498,7 +506,7 @@ export function Settings() {
             <span onClick={goLogin} className={styles["charge"]}>
               {localStorage.getItem("userInfo")
                 ? JSON.parse(localStorage.getItem("userInfo")!).username +
-                "（点击可切换账户）"
+                  "（点击可切换账户）"
                 : "未登录(点击登录)"}
             </span>
           </ListItem>
@@ -622,8 +630,8 @@ export function Settings() {
               onChange={(e) =>
                 updateConfig(
                   (config) =>
-                  (config.dontShowMaskSplashScreen =
-                    !e.currentTarget.checked),
+                    (config.dontShowMaskSplashScreen =
+                      !e.currentTarget.checked),
                 )
               }
             ></input>
@@ -708,8 +716,6 @@ export function Settings() {
         </List> 
         </> */}
 
-
-
         <List>
           <ListItem
             title={Locale.Settings.Prompt.Disable.Title}
@@ -761,4 +767,3 @@ export function Settings() {
     </ErrorBoundary>
   );
 }
-

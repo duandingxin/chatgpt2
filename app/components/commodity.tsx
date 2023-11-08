@@ -28,7 +28,7 @@ export function Commodity() {
   const getCommodity = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/commodity",
+      url: "https://test.workergpt.cn/commodity",
       withCredentials: true,
     }).then((res) => {
       setProducts(res.data.data);
@@ -39,7 +39,7 @@ export function Commodity() {
   useEffect(() => {
     getCommodity();
   }, []);
-  
+
   return (
     <ErrorBoundary>
       <div className="window-header">

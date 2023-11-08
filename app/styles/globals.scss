@@ -97,7 +97,7 @@ body {
   background-color: var(--gray);
   color: var(--black);
   text-align: center;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
   height: var(--full-height);
   width: 100vw;
@@ -364,7 +364,9 @@ pre {
 }
 
 a{
+  display: block;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 10px;
   color: #000;
+  margin-top: 20px;
 }

@@ -28,7 +28,6 @@ import { getClientConfig } from "../config/client";
 import { useAppConfig } from "../store/config";
 import { PersonPage } from "./person";
 
-
 //Loading时
 export function Loading(props: { noLogo?: boolean }) {
   return (
@@ -41,7 +40,7 @@ export function Loading(props: { noLogo?: boolean }) {
 
 //设置按需加载各个组件页面       会在客户端渲染
 const Settings = dynamic(async () => (await import("./settings")).Settings, {
-  loading: () => <Loading noLogo />,     //在客户端首次渲染时的占位符 Loading页面
+  loading: () => <Loading noLogo />, //在客户端首次渲染时的占位符 Loading页面
 });
 const Chat = dynamic(async () => (await import("./chat")).Chat, {
   loading: () => <Loading noLogo />,
@@ -64,7 +63,6 @@ const Commodity = dynamic(async () => (await import("./commodity")).Commodity, {
 const Paying = dynamic(async () => (await import("./paying")).Paying, {
   loading: () => <Loading noLogo />,
 });
-
 
 //切换主题
 export function useSwitchTheme() {
@@ -194,8 +192,3 @@ export function Home() {
     </ErrorBoundary>
   );
 }
-
-
-
-
-// index.js  入口文件 home

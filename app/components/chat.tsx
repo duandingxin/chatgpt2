@@ -1084,6 +1084,9 @@ export function Chat() {
           />
         </div>
       </div>
+      <a className={styles["releaseNotes"]} href="javascript:;">
+        蜀ICP备2023014364号-1
+      </a>
     </div>
   );
 }

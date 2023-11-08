@@ -104,7 +104,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
   // display: grid;
   // grid-template-columns: auto;
   // grid-template-rows: auto;
@@ -361,12 +360,4 @@ pre {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-a{
-  display: block;
-  text-decoration: none;
-  font-size: 10px;
-  color: #000;
-  margin-top: 20px;
 }

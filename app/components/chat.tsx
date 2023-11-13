@@ -27,7 +27,6 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
-import FileIcon from "../icons/file.svg";
 
 import axios from "axios";
 
@@ -525,7 +524,7 @@ export function ChatActions(props: {
       <ChatAction
         onClick={() => handleGetFile()}
         text={Locale.Chat.File}
-        icon={<FileIcon />}
+        icon={<BreakIcon />}
       />
       <input
         type="file"

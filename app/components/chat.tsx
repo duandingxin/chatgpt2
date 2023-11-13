@@ -27,6 +27,7 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
+import FileIcon from "../icons/file.svg";
 
 import axios from "axios";
 
@@ -526,8 +527,8 @@ export function ChatActions(props: {
       {/* 上传文件 */}
       <ChatAction
         onClick={() => handleGetFile()}
-        text={Locale.Chat.InputActions.Clear}
-        icon={<BreakIcon />}
+        text={"上传文件"}
+        icon={<FileIcon />}
       />
       <input
         type="file"

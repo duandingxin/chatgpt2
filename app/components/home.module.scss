@@ -192,12 +192,12 @@
   cursor: pointer;
 }
 
-.chat-item:hover>.chat-item-delete {
+.chat-item:hover > .chat-item-delete {
   opacity: 0.5;
   transform: translateX(-10px);
 }
 
-.chat-item:hover>.chat-item-delete:hover {
+.chat-item:hover > .chat-item-delete:hover {
   opacity: 1;
 }
 
@@ -289,7 +289,7 @@
     top: 15px;
   }
 
-  .chat-item:hover>.chat-item-delete {
+  .chat-item:hover > .chat-item-delete {
     opacity: 0.5;
     right: 5px;
   }
@@ -378,7 +378,7 @@
   }
 }
 
-.chat-message-user>.chat-message-container {
+.chat-message-user > .chat-message-container {
   align-items: flex-end;
 }
 

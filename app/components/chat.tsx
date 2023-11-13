@@ -27,7 +27,6 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
-import FileIcon from "../icons/file.svg";
 
 import axios from "axios";
 
@@ -559,7 +558,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://reverse.abom.top/user/checkexpire",
+        url: "https://test.workergpt.cn/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -586,7 +585,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/checklogin",
+      url: "https://test.workergpt.cn/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -797,35 +796,6 @@ export function Chat() {
         {/* </ListItem> */}
       </>
     );
-  }
-
-  // 上传图片转换url
-  function getImageUrl(e: any) {
-    console.log(e.target.files[0]);
-    const imgfile = e.target.files[0];
-    const formData = new FormData();
-    formData.append("file", imgfile);
-    setUserInput(imgfile.name);
-    // fetch('https://reverse.abom.top/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5',
-    //   },
-    //   body: formData,
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // 处理服务器响应
-    //     console.log('上传成功，图片地址：', data.url);
-    //   })
-    //   .catch(error => {
-    //     // 处理错误
-    //     console.error('上传失败：', error);
-    //   });
-  }
-  const getImageUrlRef = useRef<HTMLInputElement | null>(null);
-  function handleGetImage() {
-    getImageUrlRef.current?.click();
   }
 
   return (
@@ -1105,26 +1075,6 @@ export function Chat() {
             rows={inputRows}
             autoFocus={autoFocus}
           />
-
-          <div>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                getImageUrl(e);
-              }}
-              className={styles["chat-input-fileInput"]}
-              ref={getImageUrlRef}
-            />
-            <IconButton
-              icon={<FileIcon />}
-              text={Locale.Chat.GetFile}
-              className={styles["chat-input-file"]}
-              type="primary"
-              onClick={handleGetImage}
-            />
-          </div>
-
           <IconButton
             icon={<SendWhiteIcon />}
             text={Locale.Chat.Send}

@@ -523,7 +523,7 @@ export function ChatActions(props: {
       {/* 上传文件 */}
       <ChatAction
         onClick={() => handleGetFile()}
-        text={Locale.Chat.File}
+        text={Locale.Chat.InputActions.Clear}
         icon={<BreakIcon />}
       />
       <input

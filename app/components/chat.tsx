@@ -27,7 +27,7 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
-import FileIcon from "../icons/File.svg";
+import FileIcon from "../icons/file.svg";
 
 import axios from "axios";
 
@@ -62,7 +62,7 @@ import Locale from "../locales";
 
 import styles from "./home.module.scss";
 import chatStyle from "./chat.module.scss";
-import { Input, ListItem, Modal, Select } from "./ui-lib";
+import { ListItem, Modal, Select } from "./ui-lib";
 import { IconButton } from "./button";
 
 import { LAST_INPUT_KEY, Path, REQUEST_TIMEOUT_MS } from "../constant";
@@ -821,9 +821,9 @@ export function Chat() {
     //   console.error('上传失败：', error);
     // });
   }
-  const getImageUrlRef = useRef(null);
+  const getImageUrlRef = useRef<HTMLInputElement | null>(null);
   function handleGetImage() {
-    getImageUrlRef.current.click();
+    getImageUrlRef.current?.click();
   }
 
   return (

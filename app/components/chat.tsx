@@ -559,7 +559,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/user/checkexpire",
+        url: "https://reverse.abom.top/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -586,7 +586,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.abom.top/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -803,23 +803,25 @@ export function Chat() {
   function getImageUrl(e: any) {
     console.log(e.target.files[0]);
     const imgfile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", imgfile);
     setUserInput(imgfile.name);
-    // fetch('https://filesystem.site/api/file/upload/sk-xxx', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Authorization': 'sk-Ax9f11W3RZVywXrWcDiWwvY5PJrJP5CyBXjjNB0M9MlESfll',
-    //     },
-    //     body: imgfile,
-    //   })
-    // .then(response => response.json())
-    // .then(data => {
-    //   // 处理服务器响应
-    //   console.log('上传成功，图片地址：', data.url);
+    // fetch('https://reverse.abom.top/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Authorization': 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5',
+    //   },
+    //   body: formData,
     // })
-    // .catch(error => {
-    //   // 处理错误
-    //   console.error('上传失败：', error);
-    // });
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     // 处理服务器响应
+    //     console.log('上传成功，图片地址：', data.url);
+    //   })
+    //   .catch(error => {
+    //     // 处理错误
+    //     console.error('上传失败：', error);
+    //   });
   }
   const getImageUrlRef = useRef<HTMLInputElement | null>(null);
   function handleGetImage() {

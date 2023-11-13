@@ -27,6 +27,7 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
+import FileIcon from "../icons/file.svg";
 
 import axios from "axios";
 
@@ -558,7 +559,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/user/checkexpire",
+        url: "https://reverse.abom.top/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -585,7 +586,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.abom.top/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -1076,7 +1077,7 @@ export function Chat() {
             autoFocus={autoFocus}
           />
           <IconButton
-            icon={<SendWhiteIcon />}
+            icon={<FileIcon />}
             text={Locale.Chat.Send}
             className={styles["chat-input-send"]}
             type="primary"

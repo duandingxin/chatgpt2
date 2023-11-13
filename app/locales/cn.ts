@@ -3,8 +3,7 @@ import { SubmitKey } from "../store/config";
 const cn = {
   WIP: "该功能仍在开发中……",
   Error: {
-    Unauthorized:
-      "网络波动请重试!",
+    Unauthorized: "网络波动请重试!",
   },
   Auth: {
     Title: "需要密码",
@@ -50,6 +49,7 @@ const cn = {
       return inputHints + "，/ 触发补全";
     },
     Send: "发送",
+    GetFile: "上传图片",
     Config: {
       Reset: "清除记忆",
       SaveAs: "存为面具",
@@ -123,8 +123,8 @@ const cn = {
       FoundUpdate: (x: string) => `发现新版本：${x}`,
       GoToUpdate: "前往更新",
     },
-    CurrentUser:"当前用户",
-    RemainingDuration:"剩余时长",
+    CurrentUser: "当前用户",
+    RemainingDuration: "剩余时长",
     SendKey: "发送键",
     Theme: "主题",
     TightBorder: "无边框模式",

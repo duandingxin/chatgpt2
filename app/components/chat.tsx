@@ -27,6 +27,7 @@ import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
 import StopIcon from "../icons/pause.svg";
+import FileIcon from "../icons/File.svg";
 
 import axios from "axios";
 
@@ -61,7 +62,7 @@ import Locale from "../locales";
 
 import styles from "./home.module.scss";
 import chatStyle from "./chat.module.scss";
-import { ListItem, Modal, Select } from "./ui-lib";
+import { Input, ListItem, Modal, Select } from "./ui-lib";
 import { IconButton } from "./button";
 
 import { LAST_INPUT_KEY, Path, REQUEST_TIMEOUT_MS } from "../constant";
@@ -798,6 +799,33 @@ export function Chat() {
     );
   }
 
+  // 上传图片转换url
+  function getImageUrl(e: any) {
+    console.log(e.target.files[0]);
+    const imgfile = e.target.files[0];
+    setUserInput(imgfile.name);
+    // fetch('https://filesystem.site/api/file/upload/sk-xxx', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Authorization': 'sk-Ax9f11W3RZVywXrWcDiWwvY5PJrJP5CyBXjjNB0M9MlESfll',
+    //     },
+    //     body: imgfile,
+    //   })
+    // .then(response => response.json())
+    // .then(data => {
+    //   // 处理服务器响应
+    //   console.log('上传成功，图片地址：', data.url);
+    // })
+    // .catch(error => {
+    //   // 处理错误
+    //   console.error('上传失败：', error);
+    // });
+  }
+  const getImageUrlRef = useRef(null);
+  function handleGetImage() {
+    getImageUrlRef.current.click();
+  }
+
   return (
     <div className={styles.chat} key={session.id}>
       {/* 聊天页面顶部菜单 */}
@@ -1075,6 +1103,26 @@ export function Chat() {
             rows={inputRows}
             autoFocus={autoFocus}
           />
+
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                getImageUrl(e);
+              }}
+              className={styles["chat-input-fileInput"]}
+              ref={getImageUrlRef}
+            />
+            <IconButton
+              icon={<FileIcon />}
+              text={Locale.Chat.GetFile}
+              className={styles["chat-input-file"]}
+              type="primary"
+              onClick={handleGetImage}
+            />
+          </div>
+
           <IconButton
             icon={<SendWhiteIcon />}
             text={Locale.Chat.Send}

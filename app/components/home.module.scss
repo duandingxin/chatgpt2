@@ -218,12 +218,10 @@
 }
 
 .narrow-sidebar {
-
   .sidebar-title,
   .sidebar-sub-title {
     display: none;
   }
-
   .sidebar-logo {
     position: relative;
     display: flex;
@@ -320,7 +318,7 @@
 }
 
 //.
-.sidebar-action {
+.sidebar-action{
   margin-right: 2px;
   margin-left: -5px;
 }
@@ -437,7 +435,7 @@
   }
 }
 
-.chat-message-user>.chat-message-container>.chat-message-item {
+.chat-message-user > .chat-message-container > .chat-message-item {
   background-color: var(--second);
 }
 
@@ -507,7 +505,6 @@
 
       @include single-line();
     }
-
     .hint-content {
       font-size: 12px;
 
@@ -572,24 +569,8 @@
   width: 100%;
 }
 
-.releaseNotes {
+.releaseNotes{
   text-decoration: none;
   font-size: 10px;
   color: #000;
-  text-align: center;
-}
-
-.chat-input-fileInput {
-  display: none;
-}
-
-.chat-input-file {
-  background-color: var(--primary);
-  color: white;
-  border-radius: 5px;
-  padding: 5px;
-
-  position: absolute;
-  right: 110px;
-  bottom: 36px;
 }

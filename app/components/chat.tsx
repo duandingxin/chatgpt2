@@ -395,7 +395,10 @@ export function ChatActions(props: {
     const imgfile = e.target.files[0];
     const formData = new FormData();
     formData.append("file", imgfile);
-    chatStore.setUserInput(imgfile.name);
+    console.log(imgfile.type.search("image"));
+    if (imgfile.type.search("image") != -1) {
+      chatStore.setUserInput(imgfile.name);
+    }
     // const apiUrl = 'http://a132810.e1.luyouxia.net:25563/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5'; // 请替换为实际的 API 地址
     // const apiKey = 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5'; // 请替换为实际的 API 密钥
     // const filePath = '/C:/Users/admin/Downloads/sample.json'; // 请替换为实际的文件路径
@@ -528,7 +531,6 @@ export function ChatActions(props: {
       />
       <input
         type="file"
-        accept="image/*"
         onChange={(e) => {
           getFileUrl(e);
         }}

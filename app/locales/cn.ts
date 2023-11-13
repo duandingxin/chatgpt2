@@ -49,6 +49,7 @@ const cn = {
       return inputHints + "，/ 触发补全";
     },
     Send: "发送",
+    File: "上传文件",
     Config: {
       Reset: "清除记忆",
       SaveAs: "存为面具",

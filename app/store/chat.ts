@@ -79,6 +79,8 @@ interface ChatStore {
   sessions: ChatSession[];
   currentSessionIndex: number;
   globalId: number;
+  userInput: string;
+  setUserInput: (text: string) => void;
   clearSessions: () => void;
   moveSession: (from: number, to: number) => void;
   selectSession: (index: number) => void;
@@ -112,6 +114,13 @@ export const useChatStore = create<ChatStore>()(
       sessions: [createEmptySession()],
       currentSessionIndex: 0,
       globalId: 0,
+      userInput: "",
+
+      setUserInput(text: string) {
+        set({
+          userInput: text,
+        });
+      },
 
       clearSessions() {
         set(() => ({

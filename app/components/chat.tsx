@@ -390,6 +390,68 @@ export function ChatActions(props: {
   const couldStop = ChatControllerPool.hasPending();
   const stopAll = () => ChatControllerPool.stopAll();
 
+  // 上传图片转换url
+  function getFileUrl(e: any) {
+    console.log(e.target.files[0]);
+    const imgfile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", imgfile);
+    chatStore.setUserInput(imgfile.name);
+    // const apiUrl = 'http://a132810.e1.luyouxia.net:25563/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5'; // 请替换为实际的 API 地址
+    // const apiKey = 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5'; // 请替换为实际的 API 密钥
+    // const filePath = '/C:/Users/admin/Downloads/sample.json'; // 请替换为实际的文件路径
+
+    // // 读取文件内容
+    // fetch(filePath)
+    //   .then(response => response.blob()) // 获取文件的二进制数据
+    //   .then(fileBlob => {
+    //     const formData = new FormData();
+    //     formData.append('file', fileBlob, 'sample.json'); // 将文件添加到 FormData
+
+    //     // 发送 POST 请求
+    //     return fetch(apiUrl, {
+    //       method: 'POST',
+    //       headers: {
+    //         'Authorization': apiKey,
+    //       },
+    //       body: formData,
+    //     });
+    //   })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     // 处理服务器响应
+    //     console.log('上传成功，图片地址：', data.data.url);
+    //   })
+    //   .catch(error => {
+    //     // 处理错误
+    //     console.error('上传失败：', error);
+    //   });
+
+    // fetch('http://reverse.abom.top/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Authorization': 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5',
+    //   },
+    //   body: formData,
+    // })
+    //   .then(response => response.json())
+    //   .then(data => {
+    //     // 处理服务器响应
+    //     console.log('上传成功，图片地址：', data.data.url);
+    //     if(data.data.image){
+    //       chatStore.setUserInput(`![image](${data.data.url})`)
+    //     }
+    //   })
+    //   .catch(error => {
+    //     // 处理错误
+    //     console.error('上传失败：', error);
+    //   });
+  }
+  const getFileUrlRef = useRef<HTMLInputElement | null>(null);
+  function handleGetFile() {
+    getFileUrlRef.current?.click();
+  }
+
   return (
     <div className={chatStyle["chat-input-actions"]}>
       {couldStop && (
@@ -459,6 +521,21 @@ export function ChatActions(props: {
           });
         }}
       />
+      {/* 上传文件 */}
+      <ChatAction
+        onClick={() => handleGetFile()}
+        text={Locale.Chat.File}
+        icon={<FileIcon />}
+      />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => {
+          getFileUrl(e);
+        }}
+        className={chatStyle["chat-input-fileInput"]}
+        ref={getFileUrlRef}
+      />
     </div>
   );
 }
@@ -475,9 +552,9 @@ export function Chat() {
   const fontSize = config.fontSize;
 
   const [showExport, setShowExport] = useState(false); //管理导出聊天记录是否显示
-
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [userInput, setUserInput] = useState("");
+
+  // const [userInput, setUserInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { submitKey, shouldSubmit } = useSubmitHandler();
   const { scrollRef, setAutoScroll, scrollToBottom } = useScrollToBottom();
@@ -504,7 +581,7 @@ export function Chat() {
   const onPromptSelect = (prompt: Prompt) => {
     setPromptHints([]);
     inputRef.current?.focus();
-    setTimeout(() => setUserInput(prompt.content), 60);
+    setTimeout(() => chatStore.setUserInput(prompt.content), 60);
   };
 
   // auto grow input
@@ -526,12 +603,12 @@ export function Chat() {
   );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(measure, [userInput]);
+  useEffect(measure, [chatStore.userInput]);
 
   // only search prompts when user input is short
   const SEARCH_TEXT_LIMIT = 30;
   const onInput = (text: string) => {
-    setUserInput(text);
+    chatStore.setUserInput(text);
     const n = text.trim().length;
 
     // clear search results
@@ -547,12 +624,14 @@ export function Chat() {
   };
 
   const doSubmit = (userInput: string) => {
-    if (userInput.trim() === "") return;
+    if (chatStore.userInput.trim() === "") return;
     if (config.modelConfig.model.includes("gp111t-311111.5")) {
       setIsLoading(true);
-      chatStore.onUserInput(userInput).then(() => setIsLoading(false));
-      localStorage.setItem(LAST_INPUT_KEY, userInput);
-      setUserInput("");
+      chatStore
+        .onUserInput(chatStore.userInput)
+        .then(() => setIsLoading(false));
+      localStorage.setItem(LAST_INPUT_KEY, chatStore.userInput);
+      chatStore.setUserInput("");
       setPromptHints([]);
       if (!isMobileScreen) inputRef.current?.focus();
       setAutoScroll(true);
@@ -564,9 +643,11 @@ export function Chat() {
       }).then((res) => {
         if (res.data.code == 200) {
           setIsLoading(true);
-          chatStore.onUserInput(userInput).then(() => setIsLoading(false));
-          localStorage.setItem(LAST_INPUT_KEY, userInput);
-          setUserInput("");
+          chatStore
+            .onUserInput(chatStore.userInput)
+            .then(() => setIsLoading(false));
+          localStorage.setItem(LAST_INPUT_KEY, chatStore.userInput);
+          chatStore.setUserInput("");
           setPromptHints([]);
           if (!isMobileScreen) inputRef.current?.focus();
           setAutoScroll(true);
@@ -630,15 +711,15 @@ export function Chat() {
     // if ArrowUp and no userInput, fill with last input
     if (
       e.key === "ArrowUp" &&
-      userInput.length <= 0 &&
+      chatStore.userInput.length <= 0 &&
       !(e.metaKey || e.altKey || e.ctrlKey)
     ) {
-      setUserInput(localStorage.getItem(LAST_INPUT_KEY) ?? "");
+      chatStore.setUserInput(localStorage.getItem(LAST_INPUT_KEY) ?? "");
       e.preventDefault();
       return;
     }
     if (shouldSubmit(e) && promptHints.length === 0) {
-      doSubmit(userInput);
+      doSubmit(chatStore.userInput);
       e.preventDefault();
     }
   };
@@ -729,12 +810,12 @@ export function Chat() {
         : [],
     )
     .concat(
-      userInput.length > 0 && config.sendPreviewBubble
+      chatStore.userInput.length > 0 && config.sendPreviewBubble
         ? [
             {
               ...createMessage({
                 role: "user",
-                content: userInput,
+                content: chatStore.userInput,
               }),
               preview: true,
             },
@@ -761,7 +842,7 @@ export function Chat() {
   const showMaxIcon = !isMobileScreen && !clientConfig?.isApp; //判断手机和pc，用于显示不同ui
 
   useCommand({
-    fill: setUserInput,
+    fill: chatStore.setUserInput,
     submit: (text) => {
       doSubmit(text);
     },
@@ -1022,7 +1103,7 @@ export function Chat() {
                       onContextMenu={(e) => onRightClick(e, message)}
                       onDoubleClickCapture={() => {
                         if (!isMobileScreen) return;
-                        setUserInput(message.content);
+                        chatStore.setUserInput(message.content);
                       }}
                       fontSize={fontSize}
                       parentRef={scrollRef}
@@ -1059,7 +1140,7 @@ export function Chat() {
             }
 
             inputRef.current?.focus();
-            setUserInput("/");
+            chatStore.setUserInput("/");
             onSearch("");
           }}
         />
@@ -1069,7 +1150,7 @@ export function Chat() {
             className={styles["chat-input"]}
             placeholder={Locale.Chat.Input(submitKey)}
             onInput={(e) => onInput(e.currentTarget.value)}
-            value={userInput}
+            value={chatStore.userInput}
             onKeyDown={onInputKeyDown}
             onFocus={() => setAutoScroll(true)}
             onBlur={() => setAutoScroll(false)}
@@ -1077,11 +1158,11 @@ export function Chat() {
             autoFocus={autoFocus}
           />
           <IconButton
-            icon={<FileIcon />}
+            icon={<SendWhiteIcon />}
             text={Locale.Chat.Send}
             className={styles["chat-input-send"]}
             type="primary"
-            onClick={() => doSubmit(userInput)}
+            onClick={() => doSubmit(chatStore.userInput)}
           />
         </div>
       </div>

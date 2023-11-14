@@ -400,55 +400,29 @@ export function ChatActions(props: {
     if (imgfile.type.search("image") != -1) {
       chatStore.setUserInput(imgfile.name);
     }
-    // const apiUrl = 'http://a132810.e1.luyouxia.net:25563/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5'; // 请替换为实际的 API 地址
-    // const apiKey = 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5'; // 请替换为实际的 API 密钥
-    // const filePath = '/C:/Users/admin/Downloads/sample.json'; // 请替换为实际的文件路径
 
-    // // 读取文件内容
-    // fetch(filePath)
-    //   .then(response => response.blob()) // 获取文件的二进制数据
-    //   .then(fileBlob => {
-    //     const formData = new FormData();
-    //     formData.append('file', fileBlob, 'sample.json'); // 将文件添加到 FormData
-
-    //     // 发送 POST 请求
-    //     return fetch(apiUrl, {
-    //       method: 'POST',
-    //       headers: {
-    //         'Authorization': apiKey,
-    //       },
-    //       body: formData,
-    //     });
-    //   })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // 处理服务器响应
-    //     console.log('上传成功，图片地址：', data.data.url);
-    //   })
-    //   .catch(error => {
-    //     // 处理错误
-    //     console.error('上传失败：', error);
-    //   });
-
-    // fetch('http://reverse.abom.top/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Authorization': 'sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5',
-    //   },
-    //   body: formData,
-    // })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     // 处理服务器响应
-    //     console.log('上传成功，图片地址：', data.data.url);
-    //     if(data.data.image){
-    //       chatStore.setUserInput(`![image](${data.data.url})`)
-    //     }
-    //   })
-    //   .catch(error => {
-    //     // 处理错误
-    //     console.error('上传失败：', error);
-    //   });
+    fetch(
+      "http://a132810.e1.luyouxia.net:25563/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5",
+      {
+        method: "POST",
+        headers: {
+          Authorization: "sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5",
+        },
+        body: formData,
+      },
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        // 处理服务器响应
+        console.log("上传成功，图片地址：", res.data.url);
+        if (res.data.image) {
+          chatStore.setUserInput(`![image](${res.data.url})`);
+        }
+      })
+      .catch((error) => {
+        // 处理错误
+        console.error("上传失败：", error);
+      });
   }
   const getFileUrlRef = useRef<HTMLInputElement | null>(null);
   function handleGetFile() {

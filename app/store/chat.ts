@@ -195,6 +195,8 @@ export const useChatStore = create<ChatStore>()(
           currentSessionIndex: index,
           newsessions,
         }));
+
+        console.log("切换模型成功");
       },
 
       // 新建对话

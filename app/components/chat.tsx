@@ -393,43 +393,47 @@ export function ChatActions(props: {
   const stopAll = () => ChatControllerPool.stopAll();
 
   // 上传图片转换url
-  // function getFileUrl(e: any) {
-  //   console.log(e.target.files[0]);
-  //   const imgfile = e.target.files[0];
-  //   const formData = new FormData();
-  //   formData.append("file", imgfile);
-  //   console.log(imgfile.type.search("image"));
-  //   if (imgfile.type.search("image") != -1) {
-  //     chatStore.setUserInput(imgfile.name);
-  //   }
+  function getFileUrl(e: any) {
+    chatStore.setUserInput("");
+    console.log(e.target.files[0]);
+    const imgfile = e.target.files[0];
+    const formData = new FormData();
+    formData.append("file", imgfile);
+    console.log(imgfile.type.search("image"));
+    if (imgfile.type.search("image") != -1) {
+      chatStore.setUserInput(imgfile.name);
+    }
 
-  //   fetch(
-  //     "http://a132810.e1.luyouxia.net:25563/api/file/upload/sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5",
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         Authorization: "sk-SlUmMK1V3vwK9t9Q0CI7SsMI44yS8mqE1MLQvuK4NBFHmFT5",
-  //       },
-  //       body: formData,
-  //     },
-  //   )
-  //     .then((response) => response.json())
-  //     .then((res) => {
-  //       // 处理服务器响应
-  //       console.log("上传成功，图片地址：", res.data.url);
-  //       if (res.data.image) {
-  //         chatStore.setUserInput(`![image](${res.data.url})`);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       // 处理错误
-  //       console.error("上传失败：", error);
-  //     });
-  // }
-  // const getFileUrlRef = useRef<HTMLInputElement | null>(null);
-  // function handleGetFile() {
-  //   getFileUrlRef.current?.click();
-  // }
+    fetch(
+      "https://reverse.thinkgpt.cloud/api/file/upload/sk-3i5V4DAnQq0jY4naVyTkrEV8ExmPw13vym9wZKqcBQUuvpaE",
+      {
+        method: "POST",
+        headers: {
+          Authorization:
+            "Bearer sk-3i5V4DAnQq0jY4naVyTkrEV8ExmPw13vym9wZKqcBQUuvpaE",
+        },
+        body: formData,
+      },
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        // 处理服务器响应
+        console.log("上传成功，图片地址：", res.data.url);
+        if (res.data.image) {
+          chatStore.setUserInput(`![image](${res.data.url})`);
+        } else {
+          chatStore.setUserInput(`![file](${res.data.url})`);
+        }
+      })
+      .catch((error) => {
+        // 处理错误
+        console.error("上传失败：", error);
+      });
+  }
+  const getFileUrlRef = useRef<HTMLInputElement | null>(null);
+  function handleGetFile() {
+    getFileUrlRef.current?.click();
+  }
 
   return (
     <div className={chatStyle["chat-input-actions"]}>
@@ -501,7 +505,7 @@ export function ChatActions(props: {
         }}
       />
       {/* 上传文件 */}
-      {/* <ChatAction
+      <ChatAction
         onClick={() => handleGetFile()}
         text={"上传文件"}
         icon={<FileIcon />}
@@ -513,7 +517,7 @@ export function ChatActions(props: {
         }}
         className={chatStyle["chat-input-fileInput"]}
         ref={getFileUrlRef}
-      /> */}
+      />
     </div>
   );
 }

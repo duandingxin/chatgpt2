@@ -28,7 +28,7 @@ export function Commodity() {
   const getCommodity = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/commodity",
+      url: "http://reverse.thinkgpt.cloud /commodity",
       withCredentials: true,
     }).then((res) => {
       setProducts(res.data.data);

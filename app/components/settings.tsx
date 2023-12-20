@@ -293,7 +293,7 @@ export function Settings() {
 
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/checklogin",
+      url: "https://reverse.thinkgpt.cloud/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       console.log(res);
@@ -323,7 +323,7 @@ export function Settings() {
   const getExpire = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/getexpire",
+      url: "https://reverse.thinkgpt.cloud/user/getexpire",
       withCredentials: true,
     }).then((res) => {
       setExpire(res.data.data);
@@ -333,7 +333,7 @@ export function Settings() {
   const getCurrentNumber = () => {
     axios({
       method: "get",
-      url: "https://reverse.abom.top/user/getCurrentNumber",
+      url: "https://reverse.thinkgpt.cloud/user/getCurrentNumber",
       withCredentials: true,
     }).then((res) => {
       setCurrentTime(res.data.data);
@@ -344,7 +344,7 @@ export function Settings() {
     if (localStorage.getItem("userInfo")) {
       axios({
         method: "get",
-        url: "https://reverse.abom.top/common/logout",
+        url: "https://reverse.thinkgpt.cloud/common/logout",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code === 200) {
@@ -361,7 +361,7 @@ export function Settings() {
     if (event.key === "Enter") {
       axios({
         method: "post",
-        url: "https://reverse.abom.top/redemption/getRedem",
+        url: "https://reverse.thinkgpt.cloud/redemption/getRedem",
         data: {
           code,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,
@@ -386,7 +386,7 @@ export function Settings() {
     if (event.target.value.length == 16) {
       axios({
         method: "post",
-        url: "https://reverse.abom.top/redemption/getRedem",
+        url: "https://reverse.thinkgpt.cloud/redemption/getRedem",
         data: {
           code: event.target.value,
           username: JSON.parse(localStorage.getItem("userInfo")!).username,

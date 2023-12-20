@@ -37,6 +37,7 @@ export interface ChatStat {
   charCount: number;
 }
 
+// 对话框的属性
 export interface ChatSession {
   id: number;
   topic: string;
@@ -84,6 +85,7 @@ interface ChatStore {
   clearSessions: () => void;
   moveSession: (from: number, to: number) => void;
   selectSession: (index: number) => void;
+  changemodel: () => void;
   newSession: (mask?: Mask) => void;
   deleteSession: (index: number) => void;
   currentSession: () => ChatSession;
@@ -104,6 +106,7 @@ interface ChatStore {
   clearAllData: () => void;
 }
 
+// 统计对话条数
 function countMessages(msgs: ChatMessage[]) {
   return msgs.reduce((pre, cur) => pre + estimateTokenLength(cur.content), 0);
 }
@@ -136,6 +139,7 @@ export const useChatStore = create<ChatStore>()(
         });
       },
 
+      // 更换对话位置
       moveSession(from: number, to: number) {
         set((state) => {
           const { sessions, currentSessionIndex: oldIndex } = state;
@@ -161,6 +165,39 @@ export const useChatStore = create<ChatStore>()(
         });
       },
 
+      // 更换模型
+      changemodel() {
+        const sessions = get().sessions;
+        const index = get().currentSessionIndex;
+        const session = sessions.at(index);
+        // 获取当前对话框信息
+        const id = session?.id;
+        const topic = session?.topic;
+        const messages = session?.messages;
+        const stat = session?.stat;
+        const lastSummarizeIndex = session?.lastSummarizeIndex;
+        const mask = session?.mask;
+
+        // 复制信息到新对话框
+        const newsession = createEmptySession();
+        newsession.id = id!;
+        newsession.topic = topic!;
+        newsession.messages = messages!;
+        newsession.stat = stat!;
+        newsession.lastUpdate = Date.now();
+        newsession.lastSummarizeIndex = lastSummarizeIndex!;
+        newsession.mask = mask!;
+
+        const newsessions = get().sessions.slice();
+        newsessions.splice(index, 1, newsession);
+
+        set((state) => ({
+          currentSessionIndex: index,
+          newsessions,
+        }));
+      },
+
+      // 新建对话
       newSession(mask) {
         const session = createEmptySession();
 
@@ -222,6 +259,7 @@ export const useChatStore = create<ChatStore>()(
         );
       },
 
+      // 选中的对话
       currentSession() {
         let index = get().currentSessionIndex;
         const sessions = get().sessions;

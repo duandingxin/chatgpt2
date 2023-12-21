@@ -323,7 +323,7 @@ export function Settings() {
   const getExpire = () => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/getexpire",
+      url: "https://reverse.abom.top/user/getexpire",
       withCredentials: true,
     }).then((res) => {
       setExpire(res.data.data);

@@ -25,6 +25,7 @@ export function Commodity() {
     navigate(`${Path.Paying}/${id}`);
   };
 
+  // 1
   const getCommodity = () => {
     axios({
       method: "get",

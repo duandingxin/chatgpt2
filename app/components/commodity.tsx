@@ -29,7 +29,7 @@ export function Commodity() {
   const getCommodity = () => {
     axios({
       method: "get",
-      url: "http://test.workergpt.cn/commodity",
+      url: "https://test.workergpt.cn/commodity",
       withCredentials: true,
     }).then((res) => {
       setProducts(res.data.data);

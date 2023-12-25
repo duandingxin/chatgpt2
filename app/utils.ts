@@ -2,13 +2,15 @@ import { useEffect, useState } from "react";
 import { showToast } from "./components/ui-lib";
 import Locale from "./locales";
 import axios from "axios";
-import { json } from "stream/consumers";
+import { debounce } from "lodash";
 
 export function trimTopic(topic: string) {
   return topic.replace(/[，。！？”“"、,.!?]*$/, "");
 }
 
+//  1
 // 播放音频
+// 未进行防抖优化
 export async function playAudio(text: string) {
   // console.log(text);
   const userInfoJson = localStorage.getItem("userInfo");

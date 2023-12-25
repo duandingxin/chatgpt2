@@ -38,7 +38,7 @@ export function Register() {
     console.log(registerInfo);
     axios({
       method: "post",
-      url: "https://test.workergpt.cn/common/register",
+      url: "https://reverse.thinkgpt.cloud/common/register",
       data: registerInfo,
       withCredentials: true,
     }).then((res) => {
@@ -53,7 +53,7 @@ export function Register() {
   }
 
   function getCode() {
-    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
+    axios.get("https://reverse.thinkgpt.cloud/common/captcha").then((res) => {
       registerInfo.key = res.data.data.key;
       setImage(res.data.data.image);
     });

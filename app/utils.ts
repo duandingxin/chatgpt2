@@ -1,11 +1,48 @@
 import { useEffect, useState } from "react";
 import { showToast } from "./components/ui-lib";
 import Locale from "./locales";
+import axios from "axios";
+import { json } from "stream/consumers";
 
 export function trimTopic(topic: string) {
   return topic.replace(/[，。！？”“"、,.!?]*$/, "");
 }
 
+// 播放音频
+export async function playAudio(text: string) {
+  // console.log(text);
+  const userInfoJson = localStorage.getItem("userInfo");
+  const userInfo = JSON.parse(userInfoJson!);
+  showToast("正在准备语音播放,请稍等");
+  try {
+    const response = await axios({
+      method: "post",
+      url: "http://admin.lisznai.com/tts",
+      data: {
+        user_id: userInfo.id,
+        text: text,
+      },
+      responseType: "arraybuffer", // 用于接收音频流
+    });
+
+    if (response.status === 200) {
+      showToast("播放语音中..");
+      // 操作成功，处理音频流
+      let blob = new Blob([response.data], { type: "audio/mpeg" });
+      let audioUrl = URL.createObjectURL(blob);
+      let audio = new Audio(audioUrl);
+      audio.play();
+    }
+  } catch (error: any) {
+    console.error("Error in fetching data", error);
+    // 处理错误响应
+    if (error.response.status === 400) {
+      console.error("请求参数有误");
+    }
+  }
+}
+
+// 复制功能
 export async function copyToClipboard(text: string) {
   try {
     await navigator.clipboard.writeText(text);

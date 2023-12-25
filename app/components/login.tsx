@@ -28,7 +28,7 @@ export function Login() {
 
   //验证码
   function getCode() {
-    axios.get("https://test.workergpt.cn/common/captcha").then((res) => {
+    axios.get("https://reverse.thinkgpt.cloud/common/captcha").then((res) => {
       console.log(res.data.data);
       loginInfo.key = res.data.data.key;
       setImage(res.data.data.image);
@@ -39,7 +39,7 @@ export function Login() {
     console.log(loginInfo);
     await axios({
       method: "post",
-      url: "https://test.workergpt.cn/common/login",
+      url: "https://reverse.thinkgpt.cloud/common/login",
       data: loginInfo,
       withCredentials: true,
     }).then((res) => {

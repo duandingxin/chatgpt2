@@ -52,6 +52,7 @@ import {
   selectOrCopy,
   autoGrowTextArea,
   useMobileScreen,
+  playAudio,
 } from "../utils";
 
 import dynamic from "next/dynamic";
@@ -73,6 +74,7 @@ import { useCommand } from "../command";
 import { prettyObject } from "../utils/format";
 import { ExportMessageModal } from "./exporter";
 import { getClientConfig } from "../config/client";
+import { message } from "antd";
 
 const Markdown = dynamic(async () => (await import("./markdown")).Markdown, {
   loading: () => <LoadingIcon />,
@@ -620,7 +622,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/user/checkexpire",
+        url: "https://reverse.thinkgpt.cloud/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -649,7 +651,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.thinkgpt.cloud/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -1079,6 +1081,12 @@ export function Chat() {
                           onClick={() => copyToClipboard(message.content)}
                         >
                           {Locale.Chat.Actions.Copy}
+                        </div>
+                        <div
+                          className={styles["chat-message-top-action"]}
+                          onClick={() => playAudio(message.content)}
+                        >
+                          语音播放
                         </div>
                       </div>
                     )}

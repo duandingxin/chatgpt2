@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { showToast } from "./components/ui-lib";
 import Locale from "./locales";
 import axios from "axios";
-import { debounce } from "lodash";
 
 export function trimTopic(topic: string) {
   return topic.replace(/[，。！？”“"、,.!?]*$/, "");

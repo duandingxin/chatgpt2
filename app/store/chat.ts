@@ -202,10 +202,10 @@ export const useChatStore = create<ChatStore>()(
 
         set((state) => ({
           currentSessionIndex: index,
-          newsessions,
+          sessions: newsessions,
         }));
 
-        console.log("切换模型成功");
+        console.log("切换模型成功", newsession.id);
       },
 
       // 新建对话

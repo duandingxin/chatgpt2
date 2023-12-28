@@ -50,6 +50,7 @@ export interface ChatSession {
   clearContextIndex?: number;
 
   mask: Mask;
+  isOnline: boolean;
 }
 
 export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
@@ -73,6 +74,7 @@ function createEmptySession(): ChatSession {
     lastSummarizeIndex: 0,
 
     mask: createEmptyMask(),
+    isOnline: false,
   };
 }
 
@@ -81,13 +83,12 @@ interface ChatStore {
   currentSessionIndex: number;
   globalId: number;
   userInput: string;
-  isOnline: boolean;
   changeOnline: () => void;
   setUserInput: (text: string) => void;
   clearSessions: () => void;
   moveSession: (from: number, to: number) => void;
   selectSession: (index: number) => void;
-  changemodel: () => void;
+  changeModel: () => void;
   newSession: (mask?: Mask) => void;
   deleteSession: (index: number) => void;
   currentSession: () => ChatSession;
@@ -120,11 +121,18 @@ export const useChatStore = create<ChatStore>()(
       currentSessionIndex: 0,
       globalId: 0,
       userInput: "",
-      isOnline: false,
 
+      // 切换联网状态
       changeOnline() {
+        const sessions = get().sessions;
+        const index = get().currentSessionIndex;
+        const session = sessions.at(index);
+        if (session && session.isOnline !== undefined) {
+          session.isOnline = !session.isOnline;
+        }
+
         set({
-          isOnline: !this.isOnline,
+          sessions: sessions,
         });
       },
 
@@ -175,7 +183,7 @@ export const useChatStore = create<ChatStore>()(
       },
 
       // 更换模型
-      changemodel() {
+      changeModel() {
         const sessions = get().sessions;
         const index = get().currentSessionIndex;
         const session = sessions.at(index);

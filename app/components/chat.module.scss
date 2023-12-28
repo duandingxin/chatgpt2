@@ -33,7 +33,7 @@
       transition: all ease 0.3s;
       transition-delay: 0.1s;
       pointer-events: none;
-      
+
     }
 
     // &:hover {
@@ -75,7 +75,7 @@
 //   }
 // }
 
-.chat-input-fileInput{
+.chat-input-fileInput {
   display: none;
 }
 
@@ -184,12 +184,10 @@
 
   animation: slide-in ease 0.3s;
 
-  $linear: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0),
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0)
-  );
+  $linear: linear-gradient(to right,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 1),
+      rgba(0, 0, 0, 0));
   mask-image: $linear;
 
   @mixin show {
@@ -231,16 +229,18 @@
 }
 
 // 模型选择style
-.chat-select-model{
+.chat-select-model {
   font-size: 14px;
   margin-right: 13vw;
   display: flex;
   text-align: center;
 }
+
 .chat-select-model-mobile {
   float: right;
 }
-.action-mobile{
+
+.action-mobile {
   float: right;
   margin-left: 5px;
   margin-right: 5px;
@@ -266,6 +266,7 @@
 }
 
 .circlebody {
+  position: relative;
   display: flex;
   height: 16px;
   width: 32px;
@@ -274,18 +275,27 @@
   border-radius: 8px;
 }
 
-.circle {
+.circle-online {
+  position: absolute;
   width: 16px;
   height: 16px;
   background-color: #dedede;
   border-radius: 50%;
-  transition: transform 0.5s ease; /* 添加过渡效果 */
+  /* 添加过渡效果 */
+  transition: transform 0.5s ease;
+  transform: translateX(16px);
+  background-color: green;
 }
 
-// .online {
-//   transform: translateX(16px);
-// }
 
-// .offonline {
-//   transform: translateX(-16px);
-// }
+.circle-offline {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background-color: #dedede;
+  border-radius: 50%;
+  /* 添加过渡效果 */
+  transition: transform 0.5s ease;
+  transform: translateX(0);
+  background-color: #dedede;
+}

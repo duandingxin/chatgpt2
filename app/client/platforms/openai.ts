@@ -53,9 +53,11 @@ export class ChatGPTApi implements LLMApi {
       search?: boolean;
     };
 
-    // if (isOnline) {
-    //   requestPayload.search = true;
-    // }
+    const isOnline = useChatStore.getState().currentSession().isOnline;
+
+    if (isOnline) {
+      requestPayload.search = true;
+    }
 
     console.log("[Request] openai payload: ", requestPayload);
 

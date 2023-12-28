@@ -304,8 +304,15 @@ function OnlineAction(props: { text: string }) {
     full: 53,
   });
 
+  const [online, setOnline] = useState<boolean>();
   const chatStore = useChatStore();
-  const isOnline = chatStore.isOnline;
+  const session = chatStore.currentSession();
+  const isOnline = session.isOnline;
+  // console.log(session.id)
+
+  useEffect(() => {
+    setOnline(isOnline);
+  });
 
   // 宽度更新
   function updateWidth() {
@@ -319,15 +326,18 @@ function OnlineAction(props: { text: string }) {
 
   // 联网动画
   function changeOnline() {
+    // console.log(session.isOnline);
+
     if (circleRef.current) {
       chatStore.changeOnline();
-      if (!isOnline) {
-        circleRef.current.style.transform = "translateX(16px)";
-        circleRef.current.style.backgroundColor = "green";
-      } else {
-        circleRef.current.style.transform = "translateX(-1px)";
-        circleRef.current.style.backgroundColor = "#dedede";
-      }
+
+      //   if (online) {
+      //   circleRef.current.style.transform = "translateX(16px)";
+      //   circleRef.current.style.backgroundColor = "green";
+      // } else {
+      //   circleRef.current.style.transform = "translateX(0)";
+      //   circleRef.current.style.backgroundColor = "#dedede";
+      // }
     }
   }
 
@@ -342,7 +352,12 @@ function OnlineAction(props: { text: string }) {
         onClick={changeOnline}
       >
         <div className={chatStyle["circlebody"]}>
-          <div ref={circleRef} className={chatStyle[`circle`]}></div>
+          <div
+            ref={circleRef}
+            className={
+              chatStyle[`${online ? "circle-online" : "circle-offline"}`]
+            }
+          ></div>
         </div>
 
         <div className={chatStyle["text"]} ref={textRef}>
@@ -918,7 +933,7 @@ export function Chat() {
 
   // 更换模型
   useEffect(() => {
-    chatStore.changemodel();
+    chatStore.changeModel();
   }, [config.modelConfig]);
 
   // 自定义修改一下ModelConfigList

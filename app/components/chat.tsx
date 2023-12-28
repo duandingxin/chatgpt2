@@ -26,8 +26,11 @@ import LightIcon from "../icons/light.svg";
 import DarkIcon from "../icons/dark.svg";
 import AutoIcon from "../icons/auto.svg";
 import BottomIcon from "../icons/bottom.svg";
+import TopIcon from "../icons/top.svg";
 import StopIcon from "../icons/pause.svg";
 import FileIcon from "../icons/file.svg";
+import RightIcon from "../icons/out.svg";
+import LeftIcon from "../icons/inout.svg";
 
 import axios from "axios";
 
@@ -292,6 +295,64 @@ function ClearContextDivider() {
   );
 }
 
+// 联网按钮
+function OnlineAction(props: { text: string }) {
+  const circleRef = useRef<HTMLDivElement>(null);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState({
+    full: 53,
+  });
+
+  const chatStore = useChatStore();
+  const isOnline = chatStore.isOnline;
+
+  // 宽度更新
+  function updateWidth() {
+    if (!iconRef.current || !textRef.current) return;
+    const getWidth = (dom: HTMLDivElement) => dom.getBoundingClientRect().width;
+    const textWidth = getWidth(textRef.current);
+    setWidth({
+      full: textWidth,
+    });
+  }
+
+  // 联网动画
+  function changeOnline() {
+    if (circleRef.current) {
+      chatStore.changeOnline();
+      if (!isOnline) {
+        circleRef.current.style.transform = "translateX(16px)";
+        circleRef.current.style.backgroundColor = "green";
+      } else {
+        circleRef.current.style.transform = "translateX(-1px)";
+        circleRef.current.style.backgroundColor = "#dedede";
+      }
+    }
+  }
+
+  useEffect(() => {
+    updateWidth();
+  }, []);
+
+  return (
+    <>
+      <div
+        className={`${chatStyle["chat-input-action"]} clickable`}
+        onClick={changeOnline}
+      >
+        <div className={chatStyle["circlebody"]}>
+          <div ref={circleRef} className={chatStyle[`circle`]}></div>
+        </div>
+
+        <div className={chatStyle["text"]} ref={textRef}>
+          {props.text}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // 对话框上方按钮
 function ChatAction(props: {
   text: string;
@@ -373,7 +434,9 @@ export function ChatActions(props: {
   showPromptModal: () => void;
   scrollToBottom: () => void;
   showPromptHints: () => void;
+  showActionsList: () => void;
   hitBottom: boolean;
+  showActions: boolean;
 }) {
   const config = useAppConfig();
   const navigate = useNavigate();
@@ -452,73 +515,92 @@ export function ChatActions(props: {
           icon={<BottomIcon />}
         />
       )}
-      {/* 对话设置 */}
-      {props.hitBottom && (
+
+      {!props.showActions && (
         <ChatAction
-          onClick={props.showPromptModal}
-          text={Locale.Chat.InputActions.Settings}
-          icon={<SettingsIcon />}
+          onClick={props.showActionsList}
+          text="展开菜单"
+          icon={<BottomIcon />}
         />
       )}
-      {/* 调整主题 */}
-      <ChatAction
-        onClick={nextTheme}
-        text={Locale.Chat.InputActions.Theme[theme]}
-        icon={
-          <>
-            {theme === Theme.Auto ? (
-              <AutoIcon />
-            ) : theme === Theme.Light ? (
-              <LightIcon />
-            ) : theme === Theme.Dark ? (
-              <DarkIcon />
-            ) : null}
-          </>
-        }
-      />
-      {/* 快捷指令 */}
-      <ChatAction
-        onClick={props.showPromptHints}
-        text={Locale.Chat.InputActions.Prompt}
-        icon={<PromptIcon />}
-      />
-      {/* 所有面具 */}
-      <ChatAction
-        onClick={() => {
-          navigate(Path.Masks);
-        }}
-        text={Locale.Chat.InputActions.Masks}
-        icon={<MaskIcon />}
-      />
-      {/* 清除聊天 */}
-      <ChatAction
-        text={Locale.Chat.InputActions.Clear}
-        icon={<BreakIcon />}
-        onClick={() => {
-          chatStore.updateCurrentSession((session) => {
-            if (session.clearContextIndex === session.messages.length) {
-              session.clearContextIndex = undefined;
-            } else {
-              session.clearContextIndex = session.messages.length;
-              session.memoryPrompt = ""; // will clear memory
+
+      {props.showActions && (
+        <>
+          {/* 对话设置 */}
+          <ChatAction
+            onClick={props.showPromptModal}
+            text={Locale.Chat.InputActions.Settings}
+            icon={<SettingsIcon />}
+          />
+          {/* 调整主题 */}
+          <ChatAction
+            onClick={nextTheme}
+            text={Locale.Chat.InputActions.Theme[theme]}
+            icon={
+              <>
+                {theme === Theme.Auto ? (
+                  <AutoIcon />
+                ) : theme === Theme.Light ? (
+                  <LightIcon />
+                ) : theme === Theme.Dark ? (
+                  <DarkIcon />
+                ) : null}
+              </>
             }
-          });
-        }}
-      />
-      {/* 上传文件 */}
-      <ChatAction
-        onClick={() => handleGetFile()}
-        text={"上传文件"}
-        icon={<FileIcon />}
-      />
-      <input
-        type="file"
-        onChange={(e) => {
-          getFileUrl(e);
-        }}
-        className={chatStyle["chat-input-fileInput"]}
-        ref={getFileUrlRef}
-      />
+          />
+          {/* 快捷指令 */}
+          <ChatAction
+            onClick={props.showPromptHints}
+            text={Locale.Chat.InputActions.Prompt}
+            icon={<PromptIcon />}
+          />
+          {/* 所有面具 */}
+          <ChatAction
+            onClick={() => {
+              navigate(Path.Masks);
+            }}
+            text={Locale.Chat.InputActions.Masks}
+            icon={<MaskIcon />}
+          />
+          {/* 清除聊天 */}
+          <ChatAction
+            text={Locale.Chat.InputActions.Clear}
+            icon={<BreakIcon />}
+            onClick={() => {
+              chatStore.updateCurrentSession((session) => {
+                if (session.clearContextIndex === session.messages.length) {
+                  session.clearContextIndex = undefined;
+                } else {
+                  session.clearContextIndex = session.messages.length;
+                  session.memoryPrompt = ""; // will clear memory
+                }
+              });
+            }}
+          />
+          {/* 上传文件 */}
+          <ChatAction
+            onClick={() => handleGetFile()}
+            text={"读取文件"}
+            icon={<FileIcon />}
+          />
+          <input
+            type="file"
+            onChange={(e) => {
+              getFileUrl(e);
+            }}
+            className={chatStyle["chat-input-fileInput"]}
+            ref={getFileUrlRef}
+          />
+
+          <ChatAction
+            onClick={props.showActionsList}
+            text="收起菜单"
+            icon={<TopIcon />}
+          />
+
+          <OnlineAction text="联网模式" />
+        </>
+      )}
     </div>
   );
 }
@@ -534,6 +616,8 @@ export function Chat() {
   const config = useAppConfig();
   const fontSize = config.fontSize;
 
+  const [showIconButtom, setShowIconButtom] = useState(false); // 上方展开
+
   const [showExport, setShowExport] = useState(false); //管理导出聊天记录是否显示
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -542,6 +626,7 @@ export function Chat() {
   const { submitKey, shouldSubmit } = useSubmitHandler();
   const { scrollRef, setAutoScroll, scrollToBottom } = useScrollToBottom();
   const [hitBottom, setHitBottom] = useState(true);
+  const [showActions, setShowActions] = useState(false);
   const isMobileScreen = useMobileScreen();
   const navigate = useNavigate();
 
@@ -621,7 +706,7 @@ export function Chat() {
     } else {
       axios({
         method: "get",
-        url: "https://test.workergpt.cn/user/checkexpire",
+        url: "https://reverse.thinkgpt.cloud/user/checkexpire",
         withCredentials: true,
       }).then((res) => {
         if (res.data.code == 200) {
@@ -650,7 +735,7 @@ export function Chat() {
   useEffect(() => {
     axios({
       method: "get",
-      url: "https://test.workergpt.cn/user/checklogin",
+      url: "https://reverse.thinkgpt.cloud/user/checklogin",
       withCredentials: true,
     }).then((res) => {
       if (res.data.code != 200) {
@@ -857,11 +942,15 @@ export function Chat() {
             );
           }}
         >
-          {ALL_MODELS.map((v) => (
-            <option value={v.name} key={v.name} disabled={!v.available}>
-              {v.name}
-            </option>
-          ))}
+          {ALL_MODELS.map((v) => {
+            if (v.available) {
+              return (
+                <option value={v.name} key={v.name} disabled={!v.available}>
+                  {v.name}
+                </option>
+              );
+            }
+          })}
         </Select>
         {/* </ListItem> */}
       </>
@@ -945,35 +1034,67 @@ export function Chat() {
         {!showMaxIcon && (
           <>
             <div>
-              {/* 导出聊天记录 */}
-              <div className={chatStyle["action-mobile"]}>
-                <IconButton
-                  icon={<ExportIcon />}
-                  bordered
-                  title={Locale.Chat.Actions.Export}
-                  onClick={() => {
-                    setShowExport(true);
-                  }}
-                />
-              </div>
+              {!showIconButtom && (
+                <>
+                  {/* 展开 */}
+                  <div className={chatStyle["action-mobile"]}>
+                    <IconButton
+                      icon={<RightIcon />}
+                      bordered
+                      title="展开操作"
+                      onClick={() => {
+                        setShowIconButtom(!showIconButtom);
+                      }}
+                    />
+                  </div>
 
-              {/* 修改对话名 */}
-              <div className={chatStyle["action-mobile"]}>
-                <IconButton
-                  icon={<RenameIcon />}
-                  bordered
-                  onClick={renameSession}
-                />
-              </div>
-              {/* 手机端返回功能 */}
-              <div className={chatStyle["action-mobile"]}>
-                <IconButton
-                  icon={<ReturnIcon />}
-                  bordered
-                  title={Locale.Chat.Actions.ChatList}
-                  onClick={() => navigate(Path.Home)}
-                />
-              </div>
+                  {/* 手机端返回功能 */}
+                  <div className={chatStyle["action-mobile"]}>
+                    <IconButton
+                      icon={<ReturnIcon />}
+                      bordered
+                      title={Locale.Chat.Actions.ChatList}
+                      onClick={() => navigate(Path.Home)}
+                    />
+                  </div>
+                </>
+              )}
+
+              {showIconButtom && (
+                <>
+                  <div className={chatStyle["action-mobile"]}>
+                    <IconButton
+                      icon={<LeftIcon />}
+                      bordered
+                      title="收起操作"
+                      onClick={() => {
+                        setShowIconButtom(!showIconButtom);
+                      }}
+                    />
+                  </div>
+                  {/* 导出聊天记录 */}
+                  <div className={chatStyle["action-mobile"]}>
+                    <IconButton
+                      icon={<ExportIcon />}
+                      bordered
+                      title={Locale.Chat.Actions.Export}
+                      onClick={() => {
+                        setShowExport(true);
+                      }}
+                    />
+                  </div>
+
+                  {/* 修改对话名 */}
+                  <div className={chatStyle["action-mobile"]}>
+                    <IconButton
+                      icon={<RenameIcon />}
+                      bordered
+                      onClick={renameSession}
+                    />
+                  </div>
+                </>
+              )}
+
               {/* 手机端模型选择 */}
               {!showMaxIcon && (
                 <div className={chatStyle["chat-select-model-mobile"]}>
@@ -1125,8 +1246,10 @@ export function Chat() {
 
         <ChatActions
           showPromptModal={() => setShowPromptModal(true)}
+          showActionsList={() => setShowActions(!showActions)}
           scrollToBottom={scrollToBottom}
           hitBottom={hitBottom}
+          showActions={showActions}
           showPromptHints={() => {
             // Click again to close
             if (promptHints.length > 0) {

@@ -28,6 +28,8 @@ export class ChatGPTApi implements LLMApi {
       content: v.content,
     }));
 
+    // const isOnline = useChatStore().isOnline;
+
     const modelConfig = {
       ...useAppConfig.getState().modelConfig,
       ...useChatStore.getState().currentSession().mask.modelConfig,
@@ -42,7 +44,18 @@ export class ChatGPTApi implements LLMApi {
       model: modelConfig.model,
       temperature: modelConfig.temperature,
       presence_penalty: modelConfig.presence_penalty,
+    } as {
+      messages: { role: "system" | "user" | "assistant"; content: string }[];
+      stream: boolean | undefined;
+      model: string;
+      temperature: number;
+      presence_penalty: number;
+      search?: boolean;
     };
+
+    // if (isOnline) {
+    //   requestPayload.search = true;
+    // }
 
     console.log("[Request] openai payload: ", requestPayload);
 

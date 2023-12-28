@@ -81,6 +81,8 @@ interface ChatStore {
   currentSessionIndex: number;
   globalId: number;
   userInput: string;
+  isOnline: boolean;
+  changeOnline: () => void;
   setUserInput: (text: string) => void;
   clearSessions: () => void;
   moveSession: (from: number, to: number) => void;
@@ -118,6 +120,13 @@ export const useChatStore = create<ChatStore>()(
       currentSessionIndex: 0,
       globalId: 0,
       userInput: "",
+      isOnline: false,
+
+      changeOnline() {
+        set({
+          isOnline: !this.isOnline,
+        });
+      },
 
       setUserInput(text: string) {
         set({
